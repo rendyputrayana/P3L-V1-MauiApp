@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="P3L_V1.View.LoginPage"
+    Title="LoginPage"
+    Shell.FlyoutBehavior="Disabled"
+    xmlns:viewmodel="clr-namespace:P3L_V1.ViewModel"
+    x:DataType="viewmodel:LoginPageViewModel"
+    Shell.NavBarIsVisible="False">
+
+    <Grid>
+        <VerticalStackLayout VerticalOptions="Center"
+                             Margin="20,0,20,0"
+                             Spacing="20">
+            <Image Source="dotnet_bot"
+                   HorizontalOptions="Center"
+                   HeightRequest="80"
+                   WidthRequest="80" />
+            <Label Text="Welcome Back!"
+                   TextColor="#101010"
+                   FontSize="Large"
+                   HorizontalOptions="Center" />
+            <Label Text="Please enter your email below to start using the app."
+                   TextColor="LightSlateGrey"
+                   FontSize="Small"
+                   HorizontalOptions="Center" />
+            <Entry Placeholder="Username" 
+                   Text="{Binding Username}"/>
+            <Entry Placeholder="Password"
+                   IsPassword="True" 
+                   Text="{Binding Password}"/>
+            <Button Text="Sign In"
+                    HeightRequest="50"
+                    FontSize="Medium"
+                    BackgroundColor="#1d94ab" 
+                    Command="{Binding LoginCommand}"/>
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label Text="Not a member? "
+                       FontSize="Medium"
+                       TextColor="#101010" />
+                <Label Text="Join now"
+                       FontSize="Medium"
+                       TextColor="#1d94ab" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+        <Grid IsVisible="{Binding IsBusy}" BackgroundColor="#80000000">
+            <ActivityIndicator
+                IsRunning="True"
+                Color="Aqua"
+                WidthRequest="60"
+                HeightRequest="60"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+        </Grid>
+    </Grid>
+</ContentPage>

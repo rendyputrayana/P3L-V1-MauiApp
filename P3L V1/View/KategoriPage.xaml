@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="P3L_V1.View.KategoriPage"
+             Title="Kategori Produk"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:P3L_V1.ViewModel"
+             x:DataType="viewmodel:KategoriVM"
+             xmlns:model="clr-namespace:P3L_V1.Model"
+             BackgroundColor="#f4f5f8"
+             Shell.NavBarIsVisible="False">
+    <ScrollView>
+            <VerticalStackLayout Padding="24" Spacing="16">
+                <Label Text="Daftar Kategori Produk"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       TextColor="#2c3e50"
+                       Margin="0,0,0,24"/>
+                <CollectionView ItemsSource="{Binding Kategori}"
+                                SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Kategori">
+                            <Frame CornerRadius="12"
+                                   Padding="16"
+                                   BackgroundColor="White"
+                                   HasShadow="True"
+                                   BorderColor="#e0e0e0">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:KategoriVM}}, Path=SelectingKategoriCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
+                                <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                    <Label Text="{Binding NamaKategori}"
+                                           FontSize="18"
+                                           TextColor="#333"
+                                           VerticalOptions="Center"/>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                    <CollectionView.EmptyView>
+                        <Label Text="Belum ada kategori yang tersedia."
+                               FontSize="18"
+                               TextColor="#777"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing"/>
+        <mct:EventToCommandBehavior Command="{Binding DisappearingCommand}" EventName="Disappearing"/>
+    </ContentPage.Behaviors>
+
+</ContentPage>

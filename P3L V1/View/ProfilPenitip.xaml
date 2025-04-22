@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="P3L_V1.View.ProfilPenitip"
+             Title="Profil Penitip"
+             xmlns:viewmodel="clr-namespace:P3L_V1.ViewModel"
+             x:DataType="viewmodel:ProfilPenitipVM"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             BackgroundColor="#f4f6f9">
+
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="#333" />
+        </Style>
+        <Style TargetType="Frame">
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="Padding" Value="16" />
+            <Setter Property="HasShadow" Value="True" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#3498db" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="HeightRequest" Value="45" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto" Padding="20" RowSpacing="16">
+            <Frame Grid.Row="0"
+                   Padding="0"
+                   WidthRequest="120"
+                   HeightRequest="120"
+                   CornerRadius="60"
+                   HorizontalOptions="Center">
+                <Image Source="circle_user.svg"
+                       Aspect="AspectFill"
+                       WidthRequest="120"
+                       HeightRequest="120" />
+            </Frame>
+
+            <Frame Grid.Row="1">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Informasi Pribadi"
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           TextColor="{StaticResource Primary}"
+                           HorizontalOptions="Center" />
+                    <BoxView Style="{StaticResource Separator}" />
+
+                    <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, *" RowSpacing="8" ColumnSpacing="10">
+                        <Label Grid.Row="0" Grid.Column="0" Text="Nama" FontAttributes="Bold" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding MyPenitip.NamaPenitip}" />
+
+                        <Label Grid.Row="1" Grid.Column="0" Text="No. KTP" FontAttributes="Bold" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding MyPenitip.NoKtp}" />
+
+                        <Label Grid.Row="2" Grid.Column="0" Text="Telepon" FontAttributes="Bold" />
+                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding MyPenitip.NoTelepon}" />
+
+                        <Label Grid.Row="3" Grid.Column="0" Text="Alamat" FontAttributes="Bold" />
+                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding MyPenitip.AlamatPenitip}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Grid.Row="2">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Saldo Akun"
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           TextColor="{StaticResource Primary}"
+                           HorizontalOptions="Center" />
+                    <BoxView Style="{StaticResource Separator}" />
+                    <Label Text="{Binding MyPenitip.Saldo, StringFormat='Rp {0:N0}'}"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#27ae60"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button Grid.Row="3"
+                    Text="Logout"
+                    Command="{Binding LogoutCommand}"
+                    HorizontalOptions="Fill" />
+
+            <ActivityIndicator Grid.RowSpan="4"
+                               IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               Color="{StaticResource Primary}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               HeightRequest="60"
+                               WidthRequest="60" />
+        </Grid>
+    </ScrollView>
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+</ContentPage>

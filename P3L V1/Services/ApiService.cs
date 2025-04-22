@@ -1,0 +1,174 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using P3L_V1.Model;
+
+namespace P3L_V1.Services
+{
+    public class ApiService
+    {
+        private HttpClient _httpClient;
+        private const string BaseUrl = "http://10.0.2.2:8000/api";
+
+        public ApiService()
+        { 
+            _httpClient= new HttpClient()
+            {
+                BaseAddress = new Uri(BaseUrl)
+            };
+        }
+
+        public async Task<string> Login(string username, string password)
+        {
+            var credential = new LoginCredential()
+            {
+                username = username,
+                password = password
+            };
+            string role = "";
+
+            var json = JsonConvert.SerializeObject(credential);
+
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await _httpClient.PostAsync(BaseUrl + "/auth/login", data);
+                response.EnsureSuccessStatusCode();
+                var result = await response.Content.ReadAsStringAsync();
+                var jsonJObject = JObject.Parse(result);
+                var penggunaData = jsonJObject["data"]?["pengguna"]?.ToString();
+                role = jsonJObject["role"].ToString();
+                var accessToken = jsonJObject["access_token"].ToString();
+
+                if (penggunaData != null)
+                {
+                    var pengguna = JsonConvert.DeserializeObject<Pengguna>(penggunaData);
+                    Preferences.Set("token", accessToken, string.Empty);
+                    if (pengguna.IdPembeli != null)
+                    {
+                        Preferences.Set("idRole", pengguna.IdPembeli.ToString());
+                        Preferences.Set("role", "pembeli");
+                    }
+                    else if (pengguna.IdPegawai != null)
+                    {
+                        Preferences.Set("idRole", pengguna.IdPegawai.ToString());
+                        Preferences.Set("role", "pegawai");
+                    }
+                    else if (pengguna.IdOrganisasi != null)
+                    {
+                        Preferences.Set("idRole", pengguna.IdOrganisasi.ToString());
+                        Preferences.Set("role", "organisasi");
+                    }
+                    else if (pengguna.IdHunter != null)
+                    {
+                        Preferences.Set("idRole", pengguna.IdHunter.ToString());
+                        Preferences.Set("role", "hunter");
+                    }
+                    else if (pengguna.IdPenitip != null)
+                    {
+                        Preferences.Set("idRole", pengguna.IdPenitip.ToString());
+                        Preferences.Set("role", "penitip");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return "Login Gagal";
+            }
+            return role;
+        }
+
+        //logout
+        public async Task<string> Logout()
+        {
+            try
+            {
+                var accessToken = Preferences.Get("token", string.Empty);
+
+                if (string.IsNullOrEmpty(accessToken))
+                {
+                    return "Token tidak ditemukan";
+                }
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+                var response = await _httpClient.PostAsync(BaseUrl + "/auth/logout", null);
+
+                response.EnsureSuccessStatusCode();
+
+                Preferences.Remove("token");
+                Preferences.Remove("idRole");
+                Preferences.Remove("role");
+
+                return "Logout berhasil";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return "Logout gagal";
+            }
+        }
+
+        public async Task<Penitip> getPenitipById(string id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{BaseUrl}/penitip/{id}");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+
+                var apiResponse = JsonConvert.DeserializeObject<ApiResponse<Penitip>>(json);
+                return apiResponse.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<List<Kategori>> getAllKategori()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{BaseUrl}/kategori");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+
+                var result = JsonConvert.DeserializeObject <ApiResponse<List<Kategori>>>(json);
+                return result.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<List<SubKategori>> getAllSubKategoriByIdKategori(string id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{BaseUrl}/subkategori/{id}");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+
+                var result = JsonConvert.DeserializeObject<ApiResponse<List<SubKategori>>>(json);
+                return result.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+    }
+}

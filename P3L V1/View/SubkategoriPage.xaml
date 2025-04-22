@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="P3L_V1.View.SubkategoriPage"
+             Title="SubkategoriPage"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:P3L_V1.ViewModel"
+             x:DataType="viewmodel:SubkategoriVM"
+             xmlns:model="clr-namespace:P3L_V1.Model"
+             BackgroundColor="#f4f5f8">
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="24" Spacing="16">
+                <Label Text="Daftar SubKategori Produk"
+                    FontSize="28"
+                    FontAttributes="Bold"
+                    TextColor="#2c3e50"
+                    Margin="0,0,0,24"/>
+                <CollectionView ItemsSource="{Binding SubkategoriList}"
+                             SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:SubKategori">
+                            <Frame CornerRadius="12"
+                                Padding="16"
+                                BackgroundColor="White"
+                                HasShadow="True"
+                                BorderColor="#e0e0e0">
+                                <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                    <Label Text="{Binding NamaSubkategori}"
+                                        FontSize="18"
+                                        TextColor="#333"
+                                        VerticalOptions="Center"/>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                    <CollectionView.EmptyView>
+                        <Label Text="Belum ada subkategori yang tersedia."
+                            FontSize="18"
+                            TextColor="#777"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Grid IsVisible="{Binding IsBusy}" BackgroundColor="#80000000">
+            <ActivityIndicator
+                IsRunning="True"
+                Color="Aqua"
+                WidthRequest="60"
+                HeightRequest="60"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+        </Grid>
+    </Grid>
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing"/>
+        <mct:EventToCommandBehavior Command="{Binding DisappearingCommand}" EventName="Disappearing"/>
+    </ContentPage.Behaviors>
+</ContentPage>
