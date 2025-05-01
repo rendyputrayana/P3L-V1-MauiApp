@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using P3L_V1.Model;
+using Plugin.Firebase.CloudMessaging;
 
 namespace P3L_V1.Services
 {
@@ -23,6 +24,16 @@ namespace P3L_V1.Services
             };
         }
 
+        public async Task SetFCMToken()
+        {
+#if  ANDROID || IOS
+            await CrossFirebaseCloudMessaging.Current.CheckIfValidAsync();
+            var token = await CrossFirebaseCloudMessaging.Current.GetTokenAsync();
+
+            Preferences.Set("fcmtoken", token);
+#endif
+        }
+
         public async Task<string> Login(string username, string password)
         {
             var credential = new LoginCredential()
@@ -35,6 +46,7 @@ namespace P3L_V1.Services
             var json = JsonConvert.SerializeObject(credential);
 
             var data = new StringContent(json, Encoding.UTF8, "application/json");
+            await SetFCMToken();
 
             try
             {
@@ -46,10 +58,29 @@ namespace P3L_V1.Services
                 role = jsonJObject["role"].ToString();
                 var accessToken = jsonJObject["access_token"].ToString();
 
+
                 if (penggunaData != null)
                 {
                     var pengguna = JsonConvert.DeserializeObject<Pengguna>(penggunaData);
+                    Preferences.Set("idPengguna", pengguna.IdPengguna.ToString());
                     Preferences.Set("token", accessToken, string.Empty);
+                    var FCMToken = Preferences.Get("fcmtoken", string.Empty);
+
+
+                    var tokenCredential = new TokenCredential()
+                    {
+                        fcm_token = Preferences.Get("fcmtoken", String.Empty),
+                        id_pengguna = pengguna.IdPengguna.ToString()
+                    };
+                    var tokenJson = JsonConvert.SerializeObject(tokenCredential);
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+                    var tokenData = new StringContent(tokenJson, Encoding.UTF8, "application/json");
+                    var tokenResponse = await _httpClient.PostAsync(BaseUrl + "/fcm-token", tokenData);
+                    tokenResponse.EnsureSuccessStatusCode();
+
+
+
                     if (pengguna.IdPembeli != null)
                     {
                         Preferences.Set("idRole", pengguna.IdPembeli.ToString());
@@ -104,6 +135,7 @@ namespace P3L_V1.Services
                 Preferences.Remove("token");
                 Preferences.Remove("idRole");
                 Preferences.Remove("role");
+                Preferences.Remove("idPengguna");
 
                 return "Logout berhasil";
             }
