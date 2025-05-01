@@ -70,7 +70,7 @@ namespace P3L_V1.ViewModel
                     tabBar.Items.Add(new ShellContent {Title = "Kategori", ContentTemplate = new DataTemplate(typeof(KategoriPage)), Icon = "list.svg"});
                     tabBar.Items.Add(new ShellContent { Title = "Profil", ContentTemplate = new DataTemplate(typeof(ProfilPenitip)), Icon = "circle_user.svg" });
                     break;
-                case "Kurir":
+                case "Pegawai":
                     tabBar.Items.Add(new ShellContent { Title = "Profil", ContentTemplate = new DataTemplate(typeof(ProfilKurir)), Icon = "circle_user.svg" });
                     break;
                 case "Hunter":

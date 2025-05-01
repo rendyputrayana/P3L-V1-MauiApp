@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "15957269760",
+    "project_id": "p3l-pushnotification",
+    "storage_bucket": "p3l-pushnotification.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15957269760:android:ff1ea039f4b9864c7ee7e5",
+        "android_client_info": {
+          "package_name": "com.companyname.p3lv1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRScrckk7u-ErW8t9s3u_norAR4reJFMM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

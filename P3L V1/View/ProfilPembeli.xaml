@@ -2,36 +2,126 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="P3L_V1.View.ProfilPembeli"
-             Title="ProfilPembeli"
+             Title="Profil Pembeli"
              xmlns:viewmodel="clr-namespace:P3L_V1.ViewModel"
-             x:DataType="viewmodel:ProfilPembeliVM">
-    <Grid Padding="20" VerticalOptions="Center" HorizontalOptions="Center">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Label Text="Profil Hunter Page"
-               Grid.Row="0"
-               VerticalOptions="Center" 
-               HorizontalOptions="Center"
-               FontSize="24"/>
-        <ActivityIndicator IsRunning="{Binding IsBusy}"
-                           IsVisible="{Binding IsBusy}"
-                           Color="Aqua"
+             x:DataType="viewmodel:ProfilPembeliVM"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             BackgroundColor="#f4f6f9">
+
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="#333" />
+        </Style>
+        <Style TargetType="Frame">
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="Padding" Value="16" />
+            <Setter Property="HasShadow" Value="True" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#3498db" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="HeightRequest" Value="45" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+        <Style x:Key="Separator" TargetType="BoxView">
+            <Setter Property="Color" Value="#ccc" />
+            <Setter Property="HeightRequest" Value="1" />
+            <Setter Property="Margin" Value="0,5" />
+        </Style>
+        <Style x:Key="Primary" TargetType="Label">
+            <Setter Property="TextColor" Value="#3498db" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid Padding="20" RowSpacing="16" RowDefinitions="Auto, Auto, Auto, Auto, Auto">
+            <Frame Grid.Row="0"
+                   Padding="0"
+                   WidthRequest="120"
+                   HeightRequest="120"
+                   CornerRadius="60"
+                   HorizontalOptions="Center">
+                <Image Source="circle_user.svg"
+                       Aspect="AspectFill"
+                       WidthRequest="120"
+                       HeightRequest="120" />
+            </Frame>
+
+            <Frame Grid.Row="1">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Informasi Pembeli"
+                           FontAttributes="Bold"
+                           FontSize="16"
                            HorizontalOptions="Center"
-                           VerticalOptions="Center"
-                           Grid.Row="1"/>
-        <Button Text="Logout"
-                Command="{Binding LogoutCommand}"
-                HeightRequest="60"
-                WidthRequest="150"
-                BackgroundColor="#FF5733"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Grid.Row="2"/>
-    </Grid>
+                           Style="{StaticResource Primary}"/>
+                    <BoxView Style="{StaticResource Separator}"/>
+
+                    <Grid RowDefinitions="Auto" ColumnDefinitions="Auto, *" RowSpacing="8" ColumnSpacing="10">
+                        <Label Grid.Row="0" Grid.Column="0" Text="Nama" FontAttributes="Bold" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding MyPembeli.NamaPembeli}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Grid.Row="3">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Saldo Akun"
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           Style="{StaticResource Primary}"
+                           HorizontalOptions="Center" />
+                    <BoxView Style="{StaticResource Separator}" />
+                    <Label Text="{Binding MyPembeli.PoinReward, StringFormat='{0:N0} Poin'}"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#27ae60"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Grid.Row="2">
+                <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto">
+                    <VerticalStackLayout Grid.Column="0" Spacing="8">
+                        <Label Text="Alamat Saya"
+                               FontAttributes="Bold"
+                               FontSize="16"
+                               Style="{StaticResource Primary}"/>
+                        <Label Text="Kelola dan lihat daftar alamat pengiriman Anda"
+                               FontSize="12"
+                               TextColor="#777"/>
+                    </VerticalStackLayout>
+                    <ImageButton Grid.Column="1"
+                                 Source="chevron.png"
+                                 BackgroundColor="Transparent"
+                                 WidthRequest="10"
+                                 HeightRequest="10"
+                                 VerticalOptions="Center"
+                                 Command="{Binding GoToDaftarAlamatCommand}"/>
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToDaftarAlamatCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+
+            <Button Grid.Row="4"
+                    Text="Logout"
+                    Command="{Binding LogoutCommand}"
+                    HorizontalOptions="Fill" />
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               Color="#3498db"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               HeightRequest="60"
+                               WidthRequest="60" />
+        </Grid>
+    </ScrollView>
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+
 </ContentPage>

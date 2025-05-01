@@ -118,12 +118,88 @@ namespace P3L_V1.Services
         {
             try
             {
+                _httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", Preferences.Get("token", String.Empty));
                 var response = await _httpClient.GetAsync($"{BaseUrl}/penitip/{id}");
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();
 
                 var apiResponse = JsonConvert.DeserializeObject<ApiResponse<Penitip>>(json);
+                return apiResponse.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<Pembeli> getPembeliById(string id)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+
+                var response = await _httpClient.GetAsync($"{BaseUrl}/pembeli/{id}");
+                response.EnsureSuccessStatusCode();
+                var json = await response.Content.ReadAsStringAsync();
+                var apiResponse = JsonConvert.DeserializeObject<ApiResponse<Pembeli>>(json);
+                return apiResponse.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<Kurir> getKurirByIdPegawai(string id)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+
+                var response = await _httpClient.GetAsync($"{BaseUrl}/kurir/{id}");
+                response.EnsureSuccessStatusCode();
+                var json = await response.Content.ReadAsStringAsync();
+                var apiResponse = JsonConvert.DeserializeObject<ApiResponse<Kurir>>(json);
+                return apiResponse.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<Hunter> getHunterById(string id)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+                var response = await _httpClient.GetAsync($"{BaseUrl}/hunter/{id}");
+                response.EnsureSuccessStatusCode();
+                var json = await response.Content.ReadAsStringAsync();
+                var apiResponse = JsonConvert.DeserializeObject<ApiResponse<Hunter>>(json);
+                return apiResponse.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<List<Alamat>> getAlamatByIdPembeli(string id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{BaseUrl}/alamat/{id}");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var apiResponse = JsonConvert.DeserializeObject<ApiResponse<List<Alamat>>>(json);
                 return apiResponse.Data;
             }
             catch (Exception e)

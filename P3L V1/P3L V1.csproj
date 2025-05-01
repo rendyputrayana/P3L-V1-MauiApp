@@ -67,6 +67,14 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
+	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+		<GoogleServicesJson Include="google-services.json" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
+		<BundleResource Include="GoogleService-Info.plist" />
+	</ItemGroup>
+
 	<ItemGroup>
 	  <MauiXaml Update="View\DetailMerchandisePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
