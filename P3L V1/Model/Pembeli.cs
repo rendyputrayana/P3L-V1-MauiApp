@@ -10,12 +10,12 @@ namespace P3L_V1.Model
     public class Pembeli
     {
         [JsonProperty("id_pembeli")]
-        public int IdPembeli { get; set; }
+        public int id_pembeli { get; set; }
 
         [JsonProperty("nama_pembeli")]
-        public string NamaPembeli { get; set; }
+        public string nama_pembeli { get; set; }
 
         [JsonProperty("poin_reward")]
-        public int PoinReward { get; set; }
+        public int poin_reward { get; set; }
     }
 }

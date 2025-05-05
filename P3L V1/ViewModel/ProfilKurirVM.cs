@@ -60,7 +60,7 @@ namespace P3L_V1.ViewModel
                 var id = Preferences.Get("idRole", string.Empty);
                 MyKurir = await apiService.getKurirByIdPegawai(id);
 
-                MyKurir.TanggalLahir = DateTime.Parse(MyKurir.TanggalLahir)
+                MyKurir.tanggal_lahir = DateTime.Parse(MyKurir.tanggal_lahir)
                     .ToString("dddd, dd MMMM yyyy", new CultureInfo("id-ID"));
 
             }

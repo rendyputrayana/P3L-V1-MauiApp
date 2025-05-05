@@ -10,9 +10,9 @@ namespace P3L_V1.Model
     public class Kategori
     {
         [JsonProperty("id_kategori")]
-        public int IdKategori { get; set; }
+        public int id_kategori { get; set; }
 
         [JsonProperty("nama_kategori")]
-        public string NamaKategori { get; set; }
+        public string nama_kategori { get; set; }
     }
 }

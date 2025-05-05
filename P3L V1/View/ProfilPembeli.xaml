@@ -60,20 +60,20 @@
 
                     <Grid RowDefinitions="Auto" ColumnDefinitions="Auto, *" RowSpacing="8" ColumnSpacing="10">
                         <Label Grid.Row="0" Grid.Column="0" Text="Nama" FontAttributes="Bold" />
-                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding MyPembeli.NamaPembeli}" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding MyPembeli.nama_pembeli}" />
                     </Grid>
                 </VerticalStackLayout>
             </Frame>
 
             <Frame Grid.Row="3">
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="Saldo Akun"
+                    <Label Text="saldo Akun"
                            FontAttributes="Bold"
                            FontSize="16"
                            Style="{StaticResource Primary}"
                            HorizontalOptions="Center" />
                     <BoxView Style="{StaticResource Separator}" />
-                    <Label Text="{Binding MyPembeli.PoinReward, StringFormat='{0:N0} Poin'}"
+                    <Label Text="{Binding MyPembeli.poin_reward, StringFormat='{0:N0} Poin'}"
                            FontSize="20"
                            FontAttributes="Bold"
                            TextColor="#27ae60"

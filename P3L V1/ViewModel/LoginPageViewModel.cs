@@ -54,6 +54,7 @@ namespace P3L_V1.ViewModel
 
         private void SetTabs(string role)
         {
+            Preferences.Set("username", Username);
             Shell.Current.Items.Clear();
 
             var tabBar = new TabBar();

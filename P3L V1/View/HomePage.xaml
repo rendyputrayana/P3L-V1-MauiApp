@@ -5,12 +5,125 @@
              Title="HomePage"
              xmlns:viewmodel="clr-namespace:P3L_V1.ViewModel"
              x:DataType="viewmodel:HomePageVM"
-             >
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" 
-            FontSize="60"/>
-    </VerticalStackLayout>
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:model="clr-namespace:P3L_V1.Model"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#f4f6f9">
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="20">
+                <!-- Header  -->
+            <Grid
+                HeightRequest="60"
+                BackgroundColor="White"
+                ColumnDefinitions="Auto,*,Auto"
+                Padding="10"
+                VerticalOptions="Start">
+
+                <Image 
+                    Source="user.png" 
+                    HeightRequest="40" 
+                    WidthRequest="40"
+                    VerticalOptions="Center"
+                    Grid.Column="0" />
+                <Label 
+                    Text="{Binding Username, StringFormat='Hi {0}, welcome back'}"
+                    FontSize="16"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Grid.Column="1" 
+                    FontAttributes="Bold"/>
+
+                <Image 
+                    Source="logo.png" 
+                    HeightRequest="40" 
+                    WidthRequest="40"
+                    VerticalOptions="Center"
+                    Grid.Column="2" />
+            </Grid>
+            <!-- Carousel View -->
+            <CarouselView ItemsSource="{Binding CarouselImage}"
+                          HeightRequest="200"
+                          IndicatorView="CrIndicator"
+                          Loop="True">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding .}"
+                               HeightRequest="20"/>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <IndicatorView x:Name="CrIndicator"
+                           IndicatorColor="LightGray"
+                           SelectedIndicatorColor="Orange"
+                           HorizontalOptions="Center"
+                           Margin="0,5"/>
+
+            <CollectionView ItemsSource="{Binding Kategori}"
+                            SelectionMode="Single">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Kategori">
+                        <Frame CornerRadius="12"
+                               Padding="5"
+                               BackgroundColor="OrangeRed"
+                               HasShadow="True"
+                               BorderColor="#e0e0e0e0">
+                            <Label Text="{Binding nama_kategori}"
+                                   FontSize="10"
+                                   TextColor="#333"
+                                   VerticalOptions="Center"
+                                   FontAttributes="Bold"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer></TapGestureRecognizer>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+                <CollectionView ItemsSource="{Binding Barang}"
+                                SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Barang">
+                            <Border Stroke="Gray" StrokeThickness="1" Padding="10" Margin="5" Background="#FAFAFA" StrokeShape="RoundRectangle 10">
+                                <Grid ColumnDefinitions="100, *, Auto" RowDefinitions="Auto, Auto">
+                                    <!-- Gambar Barang -->
+                                    <Image Grid.RowSpan="2"
+                                           Grid.Column="0"
+                                           WidthRequest="80"
+                                           HeightRequest="80"
+                                           Aspect="AspectFill"
+                                           Source="{Binding foto_barangs[0].foto_barang}" 
+                                           Margin="0,0,10,0" />
+
+                                    <!-- Nama dan Status -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                        <Label Text="{Binding nama_barang}" FontAttributes="Bold" FontSize="16"/>
+                                        <Label Text="{Binding status_barang}" FontSize="12" TextColor="Gray"/>
+                                    </VerticalStackLayout>
+
+                                    <!-- Harga -->
+                                    <Label Grid.Column="2"
+                                           Text="{Binding harga_barang, StringFormat='Rp {0:N0}'}"
+                                           FontAttributes="Bold"
+                                           FontSize="14"
+                                           TextColor="Green"
+                                           VerticalOptions="Center"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing"/>
+    </ContentPage.Behaviors>
 </ContentPage>

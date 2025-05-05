@@ -30,7 +30,7 @@
                                 HasShadow="True"
                                 BorderColor="#e0e0e0">
                                 <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                                    <Label Text="{Binding NamaSubkategori}"
+                                    <Label Text="{Binding nama_subkategori}"
                                         FontSize="18"
                                         TextColor="#333"
                                         VerticalOptions="Center"/>

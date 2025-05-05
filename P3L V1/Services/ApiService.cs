@@ -62,7 +62,7 @@ namespace P3L_V1.Services
                 if (penggunaData != null)
                 {
                     var pengguna = JsonConvert.DeserializeObject<Pengguna>(penggunaData);
-                    Preferences.Set("idPengguna", pengguna.IdPengguna.ToString());
+                    Preferences.Set("idPengguna", pengguna.id_pengguna.ToString());
                     Preferences.Set("token", accessToken, string.Empty);
                     var FCMToken = Preferences.Get("fcmtoken", string.Empty);
 
@@ -70,7 +70,7 @@ namespace P3L_V1.Services
                     var tokenCredential = new TokenCredential()
                     {
                         fcm_token = Preferences.Get("fcmtoken", String.Empty),
-                        id_pengguna = pengguna.IdPengguna.ToString()
+                        id_pengguna = pengguna.id_pengguna.ToString()
                     };
                     var tokenJson = JsonConvert.SerializeObject(tokenCredential);
                     _httpClient.DefaultRequestHeaders.Authorization =
@@ -81,35 +81,36 @@ namespace P3L_V1.Services
 
 
 
-                    if (pengguna.IdPembeli != null)
+                    if (pengguna.id_pembeli != null)
                     {
-                        Preferences.Set("idRole", pengguna.IdPembeli.ToString());
+                        Preferences.Set("idRole", pengguna.id_pembeli.ToString());
                         Preferences.Set("role", "pembeli");
                     }
-                    else if (pengguna.IdPegawai != null)
+                    else if (pengguna.id_pegawai != null)
                     {
-                        Preferences.Set("idRole", pengguna.IdPegawai.ToString());
+                        Preferences.Set("idRole", pengguna.id_pegawai.ToString());
                         Preferences.Set("role", "pegawai");
                     }
-                    else if (pengguna.IdOrganisasi != null)
+                    else if (pengguna.id_organisasi != null)
                     {
-                        Preferences.Set("idRole", pengguna.IdOrganisasi.ToString());
+                        Preferences.Set("idRole", pengguna.id_organisasi.ToString());
                         Preferences.Set("role", "organisasi");
                     }
-                    else if (pengguna.IdHunter != null)
+                    else if (pengguna.id_hunter != null)
                     {
-                        Preferences.Set("idRole", pengguna.IdHunter.ToString());
+                        Preferences.Set("idRole", pengguna.id_hunter.ToString());
                         Preferences.Set("role", "hunter");
                     }
-                    else if (pengguna.IdPenitip != null)
+                    else if (pengguna.id_penitip != null)
                     {
-                        Preferences.Set("idRole", pengguna.IdPenitip.ToString());
+                        Preferences.Set("idRole", pengguna.id_penitip.ToString());
                         Preferences.Set("role", "penitip");
                     }
                 }
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return "Login Gagal";
             }
             return role;
@@ -136,6 +137,7 @@ namespace P3L_V1.Services
                 Preferences.Remove("idRole");
                 Preferences.Remove("role");
                 Preferences.Remove("idPengguna");
+                Preferences.Remove("username");
 
                 return "Logout berhasil";
             }
@@ -271,6 +273,24 @@ namespace P3L_V1.Services
 
                 var result = JsonConvert.DeserializeObject<ApiResponse<List<SubKategori>>>(json);
                 return result.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<List<Barang>> getAllBarang()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{BaseUrl}/barang");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponsePaginated<Barang>>(json);
+                return result.Data.Items;
             }
             catch (Exception e)
             {

@@ -27,7 +27,7 @@ namespace P3L_V1.ViewModel
         [RelayCommand]
         public async Task SelectingKategori(Kategori selectedKategori)
         {
-            await Shell.Current.GoToAsync($"{nameof(SubkategoriPage)}?id={selectedKategori.IdKategori}");
+            await Shell.Current.GoToAsync($"{nameof(SubkategoriPage)}?id={selectedKategori.id_kategori}");
         }
 
         [RelayCommand]
@@ -42,7 +42,7 @@ namespace P3L_V1.ViewModel
         }
 
         [RelayCommand]
-        public async Task Disappearing()
+        public void Disappearing()
         {
             Kategori.Clear();
         }

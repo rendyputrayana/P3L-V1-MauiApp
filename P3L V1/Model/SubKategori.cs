@@ -10,12 +10,12 @@ namespace P3L_V1.Model
     public class SubKategori
     {
         [JsonProperty("id_subkategori")]
-        public int IdSubkategori { get; set; }
+        public int id_subkategori { get; set; }
 
         [JsonProperty("nama_subkategori")]
-        public string NamaSubkategori { get; set; }
+        public string nama_subkategori { get; set; }
 
         [JsonProperty("id_kategori")]
-        public int IdKategori { get; set; }
+        public int id_kategori { get; set; }
     }
 }
