@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="P3L_V1.View.DetailBarang"
+             Title="Detail Barang"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:P3L_V1.ViewModel"
+             x:DataType="viewmodel:DetailBarangVM"
+             xmlns:model="clr-namespace:P3L_V1.Model"
+             BackgroundColor="#f4f5f8"
+             x:Name="DetailPage">
+    <ScrollView>
+        <VerticalStackLayout Padding="0" Spacing="0">
+            <CarouselView
+                ItemsSource="{Binding SelectedBarang.foto_barangs}"
+                HeightRequest="300"
+                IndicatorView="indicatorView"
+                >
+                <CarouselView.ItemTemplate>
+                    <DataTemplate x:DataType="model:FotoBarang">
+                        <Image
+                            Source="{Binding foto_barang}"
+                            Aspect="AspectFill"
+                            HeightRequest="300"
+                            />
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <IndicatorView x:Name="indicatorView"
+                           Margin="0,-50,0,0"
+                           SelectedIndicatorColor="#007bff"
+                           IndicatorColor="#d3d3d3"/>
+
+            <VerticalStackLayout Padding="20" Spacing="15">
+                <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto" ColumnSpacing="10">
+                    <Label
+                        Text="{Binding SelectedBarang.nama_barang}"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        VerticalOptions="Center" />
+                    <Label
+                        Text="{Binding SelectedBarang.status_barang}"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding SelectedBarang.status_barang}"
+                                        Value="terjual">
+                                        <Setter Property="TextColor" Value="Green" />
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding SelectedBarang.status_barang}"
+                                        Value="tersedia">
+                                        <Setter Property="TextColor" Value="Blue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label
+                        Text="Kode Produk:"
+                        FontAttributes="Bold"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        FontSize="Small"
+                        TextColor="#666" />
+                    <Label
+                        Text="{Binding SelectedBarang.kode_produk}"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        FontSize="Small"
+                        TextColor="#666"/>
+                </Grid>
+
+                <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" ColumnSpacing="10">
+                    <Label
+                        Text="Harga:"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        VerticalOptions="Center" />
+                    <Label
+                        Text="{Binding SelectedBarang.harga_barang, StringFormat='Rp {0:N0}'}"
+                        FontSize="18"
+                        TextColor="#FF6600"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        VerticalOptions="Center" />
+                    <Label
+                        Text="Berat:"
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        TextColor="#666"/>
+                    <Label
+                        Text="{Binding SelectedBarang.berat_barang, StringFormat='{0} gram'}"
+                        FontSize="14"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        VerticalOptions="Center"
+                        TextColor="#666"/>
+                </Grid>
+
+                <BoxView HeightRequest="1" BackgroundColor="#d3d3d3" Margin="0,10,0,10"/>
+
+                <Label Text="Informasi Penitipan" FontAttributes="Bold" FontSize="18" />
+                <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto" ColumnSpacing="10">
+                    <Label Text="Nota Penitipan:"  FontSize="14" TextColor="#666" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" />
+                    <Label Text="{Binding SelectedBarang.nota_penitipan}"  FontSize="14" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" />
+
+                    <Label Text="Tanggal Penitipan:"  FontSize="14" TextColor="#666" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" />
+                    <Label Text="{Binding SelectedBarang.penitipan.tanggal_penitipan, StringFormat='{0:dd MMM yyyy}'}"  FontSize="14" Grid.Row="1" Grid.Column="1" VerticalOptions="Center" />
+
+                    <Label Text="Masa Penitipan Berakhir:"  FontSize="14" TextColor="#666" Grid.Row="2" Grid.Column="0" VerticalOptions="Center" />
+                    <Label Text="{Binding SelectedBarang.masa_penitipan, StringFormat='{0:dd MMM yyyy}'}"  FontSize="14" Grid.Row="2" Grid.Column="1" VerticalOptions="Center" />
+                </Grid>
+
+                <BoxView HeightRequest="1" BackgroundColor="#d3d3d3" Margin="0,10,0,10"/>
+
+                <Label Text="Kategori Barang" FontAttributes="Bold" FontSize="18" />
+                <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" ColumnSpacing="10">
+                    <Label Text="Subkategori:"  FontSize="14" TextColor="#666" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" />
+                    <Label Text="{Binding SelectedBarang.subkategori.nama_subkategori}"  FontSize="14" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" />
+
+                    <Label Text="Kategori Utama:"  FontSize="14" TextColor="#666" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" />
+                    <Label Text="{Binding SelectedBarang.subkategori.kategori.nama_kategori}"  FontSize="14" Grid.Row="1" Grid.Column="1" VerticalOptions="Center" />
+                </Grid>
+
+                <BoxView HeightRequest="1" BackgroundColor="#d3d3d3" Margin="0,10,0,10"/>
+
+                <Label Text="Informasi Tambahan" FontAttributes="Bold" FontSize="18" />
+                <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" ColumnSpacing="10">
+                    <Label Text="Rating:"  FontSize="14" TextColor="#666" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" />
+                    <Label Text="{Binding SelectedBarang.rating_barang}"  FontSize="14" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" />
+
+                    <Label IsVisible="{Binding SelectedBarang.garansi, Converter={StaticResource NotNullConverter}}"
+                           Text="Garansi:"  FontSize="14" TextColor="#666" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" />
+                    <Label IsVisible="{Binding SelectedBarang.garansi, Converter={StaticResource NotNullConverter}}"
+                           Text="{Binding SelectedBarang.garansi}"  FontSize="14" Grid.Row="1" Grid.Column="1" VerticalOptions="Center" />
+                </Grid>
+
+                <BoxView HeightRequest="1" BackgroundColor="#d3d3d3" Margin="0,10,0,10"/>
+
+                <Label Text="Foto Barang" FontAttributes="Bold" FontSize="18" Margin="0,0,0,10"/>
+                <CollectionView ItemsSource="{Binding SelectedBarang.foto_barangs}"  HeightRequest="150">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:FotoBarang">
+                            <Image Source="{Binding foto_barang}" Aspect="AspectFit" WidthRequest="150" HeightRequest="150"  />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing"/>
+    </ContentPage.Behaviors>
+</ContentPage>

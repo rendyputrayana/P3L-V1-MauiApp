@@ -77,12 +77,21 @@
                                    VerticalOptions="Center"
                                    FontAttributes="Bold"/>
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer></TapGestureRecognizer>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomePageVM}}, Path=RefreshByKategoriCommand}"
+                                    CommandParameter="{Binding .}"/>
                             </Frame.GestureRecognizers>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Color="Chartreuse"/>
+                <RefreshView IsRefreshing="{Binding IsRefreshing}"
+                             Command="{Binding RefreshCommand}"/>
                 <CollectionView ItemsSource="{Binding Barang}"
                                 SelectionMode="Single">
                     <CollectionView.ItemsLayout>
@@ -115,6 +124,11 @@
                                            FontSize="14"
                                            TextColor="Green"
                                            VerticalOptions="Center"/>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomePageVM}}, Path=SelectingBarangCommand}"
+                                            CommandParameter="{Binding .}"/>
+                                    </Grid.GestureRecognizers>
                                 </Grid>
                             </Border>
                         </DataTemplate>

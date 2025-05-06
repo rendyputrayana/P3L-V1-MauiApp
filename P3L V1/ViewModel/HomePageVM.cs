@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using P3L_V1.Model;
 using P3L_V1.Services;
+using P3L_V1.View;
 
 namespace P3L_V1.ViewModel
 {
@@ -15,6 +16,9 @@ namespace P3L_V1.ViewModel
     {
         [ObservableProperty]
         private string username;
+
+        [ObservableProperty] 
+        private bool isRefreshing;
 
         public ObservableCollection<Kategori> Kategori { get; set; } = new ObservableCollection<Kategori>();
 
@@ -27,6 +31,69 @@ namespace P3L_V1.ViewModel
         public HomePageVM()
         {
             _apiService = new ApiService();
+        }
+
+        [RelayCommand]
+        public async Task Refresh()
+        {
+            try
+            {
+                this.IsRefreshing = true;
+                this.IsBusy = true;
+
+                if (Barang.Count != 0)
+                {
+                    Barang.Clear();
+
+                    var responseBarang = await this._apiService.getAllBarang();
+                    foreach (var item in responseBarang)
+                    {
+                        Barang.Add(item);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                this.IsBusy = false;
+                this.IsRefreshing = false;
+            }
+        }
+
+        [RelayCommand]
+        public async Task SelectingBarang(Barang SelectedBarang)
+        {
+            Barang.Clear();
+            await Shell.Current.GoToAsync($"{nameof(DetailBarang)}?id={SelectedBarang.kode_produk}");
+        }
+
+        [RelayCommand]
+        public async Task RefreshByKategori(Kategori SelectedKategori)
+        {
+            try
+            {
+                IsRefreshing = true;
+
+                var responseBarangByIdKategori = await _apiService.getBarangByIdKategori(SelectedKategori.id_kategori);
+                Barang.Clear();
+                foreach (var item in responseBarangByIdKategori)
+                {
+                    Barang.Add(item);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                IsRefreshing = false;
+            }
         }
 
         [RelayCommand]

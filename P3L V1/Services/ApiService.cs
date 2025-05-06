@@ -298,5 +298,43 @@ namespace P3L_V1.Services
                 throw;
             }
         }
+
+        public async Task<List<Barang>> getBarangByIdKategori(int idKategori)
+        {
+            try
+            {
+                string id = idKategori.ToString();
+                var response = await _httpClient.GetAsync($"{BaseUrl}/barangByCategory/" + id);
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponsePaginated<Barang>>(json);
+                return result.Data.Items;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<BarangByKodeProduk> getBarangByKodeProduk(int kodeProduk)
+        {
+            try
+            {
+                string kode = kodeProduk.ToString();
+                var response = await _httpClient.GetAsync($"{BaseUrl}/barang/" + kode);
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponse<BarangByKodeProduk>>(json);
+                return result.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }
