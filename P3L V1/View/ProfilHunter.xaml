@@ -60,10 +60,10 @@
 
                     <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *" RowSpacing="8" ColumnSpacing="10">
                         <Label Grid.Row="0" Grid.Column="0" Text="Nama" FontAttributes="Bold" />
-                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding MyHunter.NamaHunter}" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding MyHunter.nama_hunter}" />
 
                         <Label Grid.Row="1" Grid.Column="0" Text="Nomor Telepon" FontAttributes="Bold" />
-                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding MyHunter.NoTelepon}" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding MyHunter.no_telepon}" />
                     </Grid>
                 </VerticalStackLayout>
             </Frame>
@@ -71,13 +71,13 @@
 
             <Frame Grid.Row="2">
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="Saldo Komisi Akun"
+                    <Label Text="saldo Komisi Akun"
                            FontAttributes="Bold"
                            FontSize="16"
                            TextColor="Aqua"
                            HorizontalOptions="Center" />
                     <BoxView Style="{StaticResource Separator}" />
-                    <Label Text="{Binding MyHunter.Saldo, StringFormat='Rp {0:N0}'}"
+                    <Label Text="{Binding MyHunter.saldo, StringFormat='Rp {0:N0}'}"
                            FontSize="20"
                            FontAttributes="Bold"
                            TextColor="#27ae60"

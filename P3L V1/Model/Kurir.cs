@@ -10,15 +10,15 @@ namespace P3L_V1.Model
     public class Kurir
     {
         [JsonProperty("id_pegawai")]
-        public int IdPegawai { get; set; }
+        public int id_pegawai { get; set; }
 
         [JsonProperty("nama_pegawai")]
-        public string NamaPegawai { get; set; }
+        public string nama_pegawai { get; set; }
 
         [JsonProperty("tanggal_lahir")]
-        public string TanggalLahir { get; set; }
+        public string tanggal_lahir { get; set; }
 
         [JsonProperty("id_jabatan")]
-        public int IdJabatan { get; set; }
+        public int id_jabatan { get; set; }
     }
 }

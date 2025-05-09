@@ -10,15 +10,15 @@ namespace P3L_V1.Model
     public class Alamat
     {
         [JsonProperty("id_alamat")]
-        public int IdAlamat { get; set; }
+        public int id_alamat { get; set; }
 
         [JsonProperty("detail_alamat")]
-        public string DetailAlamat { get; set; }
+        public string detail_alamat { get; set; }
 
         [JsonProperty("id_pembeli")]
-        public int IdPembeli { get; set; }
+        public int id_pembeli { get; set; }
 
         [JsonProperty("is_default")]
-        public bool IsDefault { get; set; }
+        public bool is_default { get; set; }
     }
 }

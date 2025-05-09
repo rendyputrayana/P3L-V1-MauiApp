@@ -55,7 +55,7 @@ namespace P3L_V1.ViewModel
         }
 
         [RelayCommand]
-        public async Task Disappearing()
+        public void Disappearing()
         {
             if (SubkategoriList.Count == 0)
                 return;

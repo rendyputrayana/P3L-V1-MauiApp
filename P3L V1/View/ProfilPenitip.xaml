@@ -52,29 +52,29 @@
 
                     <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, *" RowSpacing="8" ColumnSpacing="10">
                         <Label Grid.Row="0" Grid.Column="0" Text="Nama" FontAttributes="Bold" />
-                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding MyPenitip.NamaPenitip}" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding MyPenitip.nama_penitip}" />
 
                         <Label Grid.Row="1" Grid.Column="0" Text="No. KTP" FontAttributes="Bold" />
-                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding MyPenitip.NoKtp}" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding MyPenitip.no_ktp}" />
 
                         <Label Grid.Row="2" Grid.Column="0" Text="Telepon" FontAttributes="Bold" />
-                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding MyPenitip.NoTelepon}" />
+                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding MyPenitip.no_telepon}" />
 
                         <Label Grid.Row="3" Grid.Column="0" Text="Alamat" FontAttributes="Bold" />
-                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding MyPenitip.AlamatPenitip}" />
+                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding MyPenitip.alamat_penitip}" />
                     </Grid>
                 </VerticalStackLayout>
             </Frame>
 
             <Frame Grid.Row="2">
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="Saldo Akun"
+                    <Label Text="saldo Akun"
                            FontAttributes="Bold"
                            FontSize="16"
                            TextColor="{StaticResource Primary}"
                            HorizontalOptions="Center" />
                     <BoxView Style="{StaticResource Separator}" />
-                    <Label Text="{Binding MyPenitip.Saldo, StringFormat='Rp {0:N0}'}"
+                    <Label Text="{Binding MyPenitip.saldo, StringFormat='Rp {0:N0}'}"
                            FontSize="20"
                            FontAttributes="Bold"
                            TextColor="#27ae60"

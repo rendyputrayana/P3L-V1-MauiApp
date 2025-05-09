@@ -1,5 +1,13 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
+using Plugin.Firebase.CloudMessaging;
+
+#if IOS
+using Plugin.Firebase.Core.Platforms.iOS;
+#elif ANDROID
+using Plugin.Firebase.Core.Platforms.Android;
+#endif
 
 namespace P3L_V1
 {
@@ -10,6 +18,7 @@ namespace P3L_V1
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .RegisterFirebaseServices()
                 .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
@@ -22,6 +31,24 @@ namespace P3L_V1
 #endif
 
             return builder.Build();
+        }
+
+        private static MauiAppBuilder RegisterFirebaseServices(this MauiAppBuilder builder)
+        {
+            builder.ConfigureLifecycleEvents(events => {
+#if IOS
+        events.AddiOS(iOS => iOS.WillFinishLaunching((_, __) => {
+            CrossFirebase.Initialize();
+            FirebaseCloudMessagingImplementation.Initialize();
+            return false;
+        }));
+#elif ANDROID
+                events.AddAndroid(android => android.OnCreate((activity, _) =>
+                    CrossFirebase.Initialize(activity)));
+#endif
+            });
+
+            return builder;
         }
     }
 }

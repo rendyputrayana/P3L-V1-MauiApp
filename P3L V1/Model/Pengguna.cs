@@ -10,30 +10,30 @@ namespace P3L_V1.Model
     public class Pengguna
     {
         [JsonProperty("id_pengguna")]
-        public int IdPengguna { get; set; }
+        public int id_pengguna { get; set; }
 
         [JsonProperty("email")]
-        public string Email { get; set; }
+        public string email { get; set; }
 
         [JsonProperty("username")]
-        public string Username { get; set; }
+        public string username { get; set; }
 
         [JsonProperty("password")]
-        public string Password { get; set; }
+        public string password { get; set; }
 
         [JsonProperty("id_organisasi")]
-        public int? IdOrganisasi { get; set; }
+        public int? id_organisasi { get; set; }
 
         [JsonProperty("id_hunter")]
-        public int? IdHunter { get; set; }
+        public int? id_hunter { get; set; }
 
         [JsonProperty("id_pembeli")]
-        public int? IdPembeli { get; set; }
+        public int? id_pembeli { get; set; }
 
         [JsonProperty("id_pegawai")]
-        public int? IdPegawai { get; set; }
+        public int? id_pegawai { get; set; }
 
         [JsonProperty("id_penitip")]
-        public int? IdPenitip { get; set; }
+        public int? id_penitip { get; set; }
     }
 }

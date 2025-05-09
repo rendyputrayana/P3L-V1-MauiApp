@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace P3L_V1.Model
 {
-    public class SubKategori
+    public class SubKategoriByKodeProduk
     {
         [JsonProperty("id_subkategori")]
         public int id_subkategori { get; set; }
@@ -17,5 +17,8 @@ namespace P3L_V1.Model
 
         [JsonProperty("id_kategori")]
         public int id_kategori { get; set; }
+
+        [JsonProperty("kategori")]
+        public Kategori kategori { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using P3L_V1.Model;
+using Plugin.Firebase.CloudMessaging;
 
 namespace P3L_V1.Services
 {
@@ -23,6 +24,16 @@ namespace P3L_V1.Services
             };
         }
 
+        public async Task SetFCMToken()
+        {
+#if  ANDROID || IOS
+            await CrossFirebaseCloudMessaging.Current.CheckIfValidAsync();
+            var token = await CrossFirebaseCloudMessaging.Current.GetTokenAsync();
+
+            Preferences.Set("fcmtoken", token);
+#endif
+        }
+
         public async Task<string> Login(string username, string password)
         {
             var credential = new LoginCredential()
@@ -35,6 +46,7 @@ namespace P3L_V1.Services
             var json = JsonConvert.SerializeObject(credential);
 
             var data = new StringContent(json, Encoding.UTF8, "application/json");
+            await SetFCMToken();
 
             try
             {
@@ -46,39 +58,59 @@ namespace P3L_V1.Services
                 role = jsonJObject["role"].ToString();
                 var accessToken = jsonJObject["access_token"].ToString();
 
+
                 if (penggunaData != null)
                 {
                     var pengguna = JsonConvert.DeserializeObject<Pengguna>(penggunaData);
+                    Preferences.Set("idPengguna", pengguna.id_pengguna.ToString());
                     Preferences.Set("token", accessToken, string.Empty);
-                    if (pengguna.IdPembeli != null)
+                    var FCMToken = Preferences.Get("fcmtoken", string.Empty);
+
+
+                    var tokenCredential = new TokenCredential()
                     {
-                        Preferences.Set("idRole", pengguna.IdPembeli.ToString());
+                        fcm_token = Preferences.Get("fcmtoken", String.Empty),
+                        id_pengguna = pengguna.id_pengguna.ToString()
+                    };
+                    var tokenJson = JsonConvert.SerializeObject(tokenCredential);
+                    _httpClient.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+                    var tokenData = new StringContent(tokenJson, Encoding.UTF8, "application/json");
+                    var tokenResponse = await _httpClient.PostAsync(BaseUrl + "/fcm-token", tokenData);
+                    tokenResponse.EnsureSuccessStatusCode();
+
+
+
+                    if (pengguna.id_pembeli != null)
+                    {
+                        Preferences.Set("idRole", pengguna.id_pembeli.ToString());
                         Preferences.Set("role", "pembeli");
                     }
-                    else if (pengguna.IdPegawai != null)
+                    else if (pengguna.id_pegawai != null)
                     {
-                        Preferences.Set("idRole", pengguna.IdPegawai.ToString());
+                        Preferences.Set("idRole", pengguna.id_pegawai.ToString());
                         Preferences.Set("role", "pegawai");
                     }
-                    else if (pengguna.IdOrganisasi != null)
+                    else if (pengguna.id_organisasi != null)
                     {
-                        Preferences.Set("idRole", pengguna.IdOrganisasi.ToString());
+                        Preferences.Set("idRole", pengguna.id_organisasi.ToString());
                         Preferences.Set("role", "organisasi");
                     }
-                    else if (pengguna.IdHunter != null)
+                    else if (pengguna.id_hunter != null)
                     {
-                        Preferences.Set("idRole", pengguna.IdHunter.ToString());
+                        Preferences.Set("idRole", pengguna.id_hunter.ToString());
                         Preferences.Set("role", "hunter");
                     }
-                    else if (pengguna.IdPenitip != null)
+                    else if (pengguna.id_penitip != null)
                     {
-                        Preferences.Set("idRole", pengguna.IdPenitip.ToString());
+                        Preferences.Set("idRole", pengguna.id_penitip.ToString());
                         Preferences.Set("role", "penitip");
                     }
                 }
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return "Login Gagal";
             }
             return role;
@@ -104,6 +136,8 @@ namespace P3L_V1.Services
                 Preferences.Remove("token");
                 Preferences.Remove("idRole");
                 Preferences.Remove("role");
+                Preferences.Remove("idPengguna");
+                Preferences.Remove("username");
 
                 return "Logout berhasil";
             }
@@ -238,6 +272,62 @@ namespace P3L_V1.Services
                 var json = await response.Content.ReadAsStringAsync();
 
                 var result = JsonConvert.DeserializeObject<ApiResponse<List<SubKategori>>>(json);
+                return result.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<List<Barang>> getAllBarang()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{BaseUrl}/barang");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponsePaginated<Barang>>(json);
+                return result.Data.Items;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<List<Barang>> getBarangByIdKategori(int idKategori)
+        {
+            try
+            {
+                string id = idKategori.ToString();
+                var response = await _httpClient.GetAsync($"{BaseUrl}/barangByCategory/" + id);
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponsePaginated<Barang>>(json);
+                return result.Data.Items;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<BarangByKodeProduk> getBarangByKodeProduk(int kodeProduk)
+        {
+            try
+            {
+                string kode = kodeProduk.ToString();
+                var response = await _httpClient.GetAsync($"{BaseUrl}/barang/" + kode);
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponse<BarangByKodeProduk>>(json);
                 return result.Data;
             }
             catch (Exception e)

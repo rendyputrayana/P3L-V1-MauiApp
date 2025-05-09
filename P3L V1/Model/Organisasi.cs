@@ -10,12 +10,12 @@ namespace P3L_V1.Model
     public class Organisasi
     {
         [JsonProperty("id_organisasi")]
-        public int IdOrganisasi { get; set; }
+        public int id_organisasi { get; set; }
 
         [JsonProperty("nama_organisasi")]
-        public string NamaOrganisasi { get; set; }
+        public string nama_organisasi { get; set; }
 
         [JsonProperty("alamat_organisasi")]
-        public string AlamatOrganisasi { get; set; }
+        public string alamat_organisasi { get; set; }
     }
 }

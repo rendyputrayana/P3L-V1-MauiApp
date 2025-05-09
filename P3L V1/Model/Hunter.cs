@@ -10,15 +10,15 @@ namespace P3L_V1.Model
     public class Hunter
     {
         [JsonProperty("id_hunter")]
-        public int IdHunter { get; set; }
+        public int id_hunter { get; set; }
 
         [JsonProperty("nama_hunter")]
-        public string NamaHunter { get; set; }
+        public string nama_hunter { get; set; }
 
         [JsonProperty("saldo")]
-        public int Saldo { get; set; }
+        public int saldo { get; set; }
 
         [JsonProperty("no_telepon")]
-        public string NoTelepon { get; set; }
+        public string no_telepon { get; set; }
     }
 }
