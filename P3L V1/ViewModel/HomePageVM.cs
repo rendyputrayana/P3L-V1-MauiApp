@@ -24,9 +24,9 @@ namespace P3L_V1.ViewModel
 
         public ObservableCollection<Barang> Barang { get; set; } = new ObservableCollection<Barang>();
 
-        public ObservableCollection<string> CarouselImage { get; set; }
+        public ObservableCollection<CarouselItemHomePage> CarouselItems { get; set; } = new ObservableCollection<CarouselItemHomePage>();
 
-        private ApiService _apiService;
+		private ApiService _apiService;
 
         public HomePageVM()
         {
@@ -103,15 +103,29 @@ namespace P3L_V1.ViewModel
             try
             {
                 this.IsBusy = true;
-                CarouselImage = new ObservableCollection<string>()
+                CarouselItems.Clear();
+                CarouselItems.Add(new CarouselItemHomePage
                 {
-                    "cr1.png",
-                    "cr2.png",
-                    "cr3.png",
-                    "cr4.png",
-                };
+                    title ="cr1.png",
+                    image = "cr1.png"
+				});
+				CarouselItems.Add(new CarouselItemHomePage
+				{
+					title = "cr2.png",
+					image = "cr2.png"
+				});
+				CarouselItems.Add(new CarouselItemHomePage
+				{
+					title = "cr3.png",
+					image = "cr3.png"
+				});
+				CarouselItems.Add(new CarouselItemHomePage
+				{
+					title = "cr4.png",
+					image = "cr4.png"
+				});
 
-                var response = await this._apiService.getAllKategori();
+				var response = await this._apiService.getAllKategori();
                 if (Kategori.Count != 0)
                 {
                     Kategori.Clear();

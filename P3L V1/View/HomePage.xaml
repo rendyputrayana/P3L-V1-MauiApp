@@ -41,15 +41,16 @@
                     Grid.Column="2" />
             </Grid>
             <!-- Carousel View -->
-            <CarouselView ItemsSource="{Binding CarouselImage}"
+            <CarouselView ItemsSource="{Binding CarouselItems}"
                           HeightRequest="200"
                           IndicatorView="CrIndicator"
                           Loop="True">
                 <CarouselView.ItemTemplate>
-                    <DataTemplate>
-                        <Image Source="{Binding .}"
-                               HeightRequest="20"/>
-                    </DataTemplate>
+                    <DataTemplate x:DataType="model:CarouselItemHomePage">
+						<Image Source="{Binding image}"
+							   Aspect="AspectFill"
+							   HeightRequest="200"/>
+					</DataTemplate>
                 </CarouselView.ItemTemplate>
             </CarouselView>
             <IndicatorView x:Name="CrIndicator"
