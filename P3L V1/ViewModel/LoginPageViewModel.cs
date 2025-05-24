@@ -15,7 +15,7 @@ namespace P3L_V1.ViewModel
         [ObservableProperty] 
         private string username;
 
-        [ObservableProperty] 
+        [ObservableProperty]  
         private string password;
 
         private readonly ApiService apiService;

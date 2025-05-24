@@ -22,6 +22,9 @@ namespace P3L_V1.ViewModel
         
         private readonly ApiService _apiService;
 
+        [ObservableProperty]
+        private bool isGaransi;
+
         public DetailBarangVM()
         {
             this._apiService = new ApiService();
@@ -37,7 +40,21 @@ namespace P3L_V1.ViewModel
                 var response = await _apiService.getBarangByKodeProduk(SelectedKodeProduk);
                 if (response != null)
                 {
+                    foreach (var item in response.foto_barangs)
+                    {
+                        item.foto_barang = "http://10.0.2.2:8000/" + item.foto_barang;
+                    }
                     SelectedBarang = response;
+                }
+
+                var kategoriSelectedBarang = selectedBarang.id_subkategori;
+                if(kategoriSelectedBarang > 7)
+                {
+                    IsGaransi = false;
+                }
+                else
+                {
+                    IsGaransi = true;
                 }
             }
             catch (Exception e)

@@ -35,7 +35,7 @@
                                         CommandParameter="{Binding .}"/>
                                 </Frame.GestureRecognizers>
                                 <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                                    <Label Text="{Binding NamaKategori}"
+                                    <Label Text="{Binding nama_kategori}"
                                            FontSize="18"
                                            TextColor="#333"
                                            VerticalOptions="Center"/>

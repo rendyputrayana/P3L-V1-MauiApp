@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -41,6 +42,7 @@ namespace P3L_V1.Services
                 username = username,
                 password = password
             };
+
             string role = "";
 
             var json = JsonConvert.SerializeObject(credential);
@@ -329,6 +331,41 @@ namespace P3L_V1.Services
                 var json = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ApiResponse<BarangByKodeProduk>>(json);
                 return result.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<List<MerchandisePlusFoto>> getAllMerchandise()
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+                var response = await _httpClient.GetAsync($"{BaseUrl}/merchandise");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponse<List<Merchandise>>>(json);
+                var data = result.Data;
+                List<MerchandisePlusFoto> returnData = new List<MerchandisePlusFoto>();
+                int counter = 0;
+                foreach (var item in data)
+                {
+                    counter++;
+                    var merchandise = new MerchandisePlusFoto
+                    {
+                        id_merchandise = item.id_merchandise,
+                        foto = "m"+counter.ToString()+".jpg",
+                        nama_merchandise = item.nama_merchandise,
+                        poin = item.poin,
+                        stok = item.stok
+                    };
+                    returnData.Add(merchandise);
+                }
+                return returnData;
             }
             catch (Exception e)
             {

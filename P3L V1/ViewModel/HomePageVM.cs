@@ -82,6 +82,10 @@ namespace P3L_V1.ViewModel
                 Barang.Clear();
                 foreach (var item in responseBarangByIdKategori)
                 {
+                    foreach(var foto in item.foto_barangs)
+                    {
+                        foto.foto_barang = "http://10.0.2.2:8000/" + foto.foto_barang;
+                    }
                     Barang.Add(item);
                 }
             }

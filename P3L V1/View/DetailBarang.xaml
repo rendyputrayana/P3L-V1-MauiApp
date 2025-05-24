@@ -27,11 +27,11 @@
                 </CarouselView.ItemTemplate>
             </CarouselView>
             <IndicatorView x:Name="indicatorView"
-                           Margin="0,-50,0,0"
+                           Margin="0,10,0,0"
                            SelectedIndicatorColor="#007bff"
-                           IndicatorColor="#d3d3d3"/>
-
-            <VerticalStackLayout Padding="20" Spacing="15">
+                           IndicatorColor="#d3d3d3"
+                           HorizontalOptions="Center"/>
+            <VerticalStackLayout Padding="20" Spacing="15" Margin="0,0,0,0">
                 <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto" ColumnSpacing="10">
                     <Label
                         Text="{Binding SelectedBarang.nama_barang}"
@@ -107,7 +107,7 @@
                         VerticalOptions="Center"
                         TextColor="#666"/>
                     <Label
-                        Text="{Binding SelectedBarang.berat_barang, StringFormat='{0} gram'}"
+                        Text="{Binding SelectedBarang.berat_barang, StringFormat='{0} kilogram'}"
                         FontSize="14"
                         Grid.Row="1"
                         Grid.Column="1"
@@ -142,30 +142,19 @@
 
                 <BoxView HeightRequest="1" BackgroundColor="#d3d3d3" Margin="0,10,0,10"/>
 
-                <Label Text="Informasi Tambahan" FontAttributes="Bold" FontSize="18" />
+                <Label Text="Informasi Tambahan" FontAttributes="Bold" FontSize="18" IsVisible="{Binding IsGaransi}"/>
                 <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" ColumnSpacing="10">
-                    <Label Text="Rating:"  FontSize="14" TextColor="#666" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" />
-                    <Label Text="{Binding SelectedBarang.rating_barang}"  FontSize="14" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" />
+                    <Label Text="Rating:"  FontSize="14" TextColor="#666" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" 
+                           IsVisible="{Binding IsGaransi}"/>
+                    <Label Text="{Binding SelectedBarang.rating_barang}"  FontSize="14" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" IsVisible="{Binding IsGaransi}"/>
 
-                    <Label IsVisible="{Binding SelectedBarang.garansi, Converter={StaticResource NotNullConverter}}"
+                    <Label IsVisible="{Binding IsGaransi, Converter={StaticResource NotNullConverter}}"
                            Text="Garansi:"  FontSize="14" TextColor="#666" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" />
-                    <Label IsVisible="{Binding SelectedBarang.garansi, Converter={StaticResource NotNullConverter}}"
+                    <Label IsVisible="{Binding IsGaransi, Converter={StaticResource NotNullConverter}}"
                            Text="{Binding SelectedBarang.garansi}"  FontSize="14" Grid.Row="1" Grid.Column="1" VerticalOptions="Center" />
                 </Grid>
 
-                <BoxView HeightRequest="1" BackgroundColor="#d3d3d3" Margin="0,10,0,10"/>
-
-                <Label Text="Foto Barang" FontAttributes="Bold" FontSize="18" Margin="0,0,0,10"/>
-                <CollectionView ItemsSource="{Binding SelectedBarang.foto_barangs}"  HeightRequest="150">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:FotoBarang">
-                            <Image Source="{Binding foto_barang}" Aspect="AspectFit" WidthRequest="150" HeightRequest="150"  />
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                <BoxView HeightRequest="1" BackgroundColor="#d3d3d3" Margin="0,10,0,10" IsVisible="{Binding IsGaransi}"/>
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
