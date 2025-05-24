@@ -16,7 +16,7 @@
             <Image Source="dotnet_bot"
                    HorizontalOptions="Center"
                    HeightRequest="80"
-                   WidthRequest="80" />
+                   WidthRequest="80"/>
             <Label Text="Welcome Back!"
                    TextColor="#101010"
                    FontSize="Large"

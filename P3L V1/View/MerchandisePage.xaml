@@ -2,14 +2,64 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="P3L_V1.View.MerchandisePage"
-             Title="MerchandisePage"
+             Title="Daftar Merchandise"
              xmlns:viewmodel="clr-namespace:P3L_V1.ViewModel"
              x:DataType="viewmodel:MerchandiseVM"
-             xmlns:model="clr-namespace:P3L_V1.Model">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             xmlns:model="clr-namespace:P3L_V1.Model"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="10">
+            <CollectionView ItemsSource="{Binding ListMerchandise}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:MerchandisePlusFoto">
+                        <Border
+                            Stroke="Gray"
+                            StrokeThickness="1"
+                            Padding="10"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 12"
+                            Margin="0,5">
+                            <Grid ColumnDefinitions="auto,*,auto"
+                                  RowDefinitions="auto, auto, auto"
+                                  ColumnSpacing="10">
+                                <Image 
+                                    Source="{Binding foto}" 
+                                    WidthRequest="80" 
+                                    HeightRequest="80"
+                                    Aspect="AspectFill"
+                                    Grid.RowSpan="3"
+                                    VerticalOptions="Center" />
+
+                                <Label 
+                                    Text="{Binding nama_merchandise}" 
+                                    FontAttributes="Bold" 
+                                    FontSize="18"
+                                    Grid.Column="1"
+                                    VerticalOptions="Center" />
+
+                                <Label 
+                                    Text="{Binding poin, StringFormat='Poin: {0}'}"
+                                    FontSize="14"
+                                    Grid.Column="1"
+                                    Grid.Row="1"
+                                    TextColor="DarkGreen" />
+
+                                <Label 
+                                    Text="{Binding stok, StringFormat='Stok: {0}'}"
+                                    FontSize="14"
+                                    Grid.Column="1"
+                                    Grid.Row="2"
+                                    TextColor="DarkRed" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

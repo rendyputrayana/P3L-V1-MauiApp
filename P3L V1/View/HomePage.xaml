@@ -11,7 +11,6 @@
              BackgroundColor="#f4f6f9">
     <ScrollView>
         <VerticalStackLayout Padding="10" Spacing="20">
-                <!-- Header  -->
             <Grid
                 HeightRequest="60"
                 BackgroundColor="White"
@@ -32,7 +31,6 @@
                     HorizontalOptions="Center"
                     Grid.Column="1" 
                     FontAttributes="Bold"/>
-
                 <Image 
                     Source="logo.png" 
                     HeightRequest="40" 
@@ -40,7 +38,6 @@
                     VerticalOptions="Center"
                     Grid.Column="2" />
             </Grid>
-            <!-- Carousel View -->
             <CarouselView ItemsSource="{Binding CarouselItems}"
                           HeightRequest="200"
                           IndicatorView="CrIndicator"
@@ -55,7 +52,7 @@
             </CarouselView>
             <IndicatorView x:Name="CrIndicator"
                            IndicatorColor="LightGray"
-                           SelectedIndicatorColor="Orange"
+                           SelectedIndicatorColor="Pink"
                            HorizontalOptions="Center"
                            Margin="0,5"/>
 
@@ -102,23 +99,20 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Barang">
                             <Border Stroke="Gray" StrokeThickness="1" Padding="10" Margin="5" Background="#FAFAFA" StrokeShape="RoundRectangle 10">
-                                <Grid ColumnDefinitions="100, *, Auto" RowDefinitions="Auto, Auto">
-                                    <!-- Gambar Barang -->
-                                    <Image Grid.RowSpan="2"
+                            <Grid ColumnDefinitions="100, *, Auto" RowDefinitions="Auto, Auto">
+                                <Image Grid.RowSpan="2"
                                            Grid.Column="0"
                                            WidthRequest="80"
                                            HeightRequest="80"
                                            Aspect="AspectFill"
                                            Source="{Binding foto_barangs[0].foto_barang}" 
                                            Margin="0,0,10,0" />
-
-                                    <!-- Nama dan Status -->
-                                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                
+                                <VerticalStackLayout Grid.Column="1" Spacing="2">
                                         <Label Text="{Binding nama_barang}" FontAttributes="Bold" FontSize="16"/>
                                         <Label Text="{Binding status_barang}" FontSize="12" TextColor="Gray"/>
                                     </VerticalStackLayout>
 
-                                    <!-- Harga -->
                                     <Label Grid.Column="2"
                                            Text="{Binding harga_barang, StringFormat='Rp {0:N0}'}"
                                            FontAttributes="Bold"
