@@ -102,6 +102,12 @@
 	  <MauiXaml Update="View\MerchandisePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\Pengiriman.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\ProfilGuest.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\ProfilHunter.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

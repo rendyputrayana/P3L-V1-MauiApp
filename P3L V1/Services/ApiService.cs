@@ -373,5 +373,48 @@ namespace P3L_V1.Services
                 throw;
             }
         }
+
+        public async Task<List<PenjualanPlusAlamat>> getPenjualanByIdKurir(string id_kurir)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+                var response = await _httpClient.GetAsync($"{BaseUrl}/penjualan/kurir/{id_kurir}");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponse<List<PenjualanPlusAlamat>>>(json);
+                return result.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task VerifikasiPengiriman(string nota_penjualan)
+        {
+            try
+            {
+                VerifiPengirimanKurir data = new VerifiPengirimanKurir
+                {
+                    id_pegawai = Preferences.Get("idRole", String.Empty),
+                    nota_penjualan = nota_penjualan
+                };
+
+                var json = JsonConvert.SerializeObject(data);
+
+                var postStringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync(BaseUrl + "/penjualan/kurir", postStringContent);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }
