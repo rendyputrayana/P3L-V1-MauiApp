@@ -416,5 +416,43 @@ namespace P3L_V1.Services
                 throw;
             }
         }
+
+        public async Task<List<Penjualan>> getPenjualanById(string id_pembeli)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+                var response = await _httpClient.GetAsync($"{BaseUrl}/penjualan/pembeli/{id_pembeli}");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponse<List<Penjualan>>>(json);
+                return result.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<List<BarangPlusRincianPenjualan>> GetPenitipanById(string id_penitip)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+                var response = await _httpClient.GetAsync($"{BaseUrl}/penitipan/{id_penitip}");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponse<List<BarangPlusRincianPenjualan>>>(json);
+                return result.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }
