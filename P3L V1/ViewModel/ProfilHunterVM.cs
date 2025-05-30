@@ -69,5 +69,19 @@ namespace P3L_V1.ViewModel
 
             }
         }
+
+        [RelayCommand]
+        public async Task GoToHistory()
+        {
+            try
+            {
+                await Shell.Current.GoToAsync(nameof(HistoriKomisiHunter));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

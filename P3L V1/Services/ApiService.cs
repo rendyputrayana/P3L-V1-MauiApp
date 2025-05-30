@@ -373,5 +373,24 @@ namespace P3L_V1.Services
                 throw;
             }
         }
+
+        public async Task<List<PenjualanHunter>> getHistoryHunterByIdHunter(string id_hunter)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+                var response = await _httpClient.GetAsync($"{BaseUrl}/historyHunterByIdHunter/{id_hunter}");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponse<List<PenjualanHunter>>>(json);
+                return result.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

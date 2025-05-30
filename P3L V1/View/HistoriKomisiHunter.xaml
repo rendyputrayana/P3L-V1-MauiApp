@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:P3L_V1.ViewModel"
+             xmlns:model="clr-namespace:P3L_V1.Model"
+             x:Class="P3L_V1.View.HistoriKomisiHunter"
+             x:DataType="viewmodel:HistoriKomisiHunterVM"
+             Title="💸 Riwayat Komisi Hunter"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+    <VerticalStackLayout>
+        <ScrollView>
+            <CollectionView ItemsSource="{Binding dataHistory}"
+                                SelectionMode="None"
+                                EmptyView="Tidak ada riwayat komisi yang tersedia.">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="15" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:PenjualanHunter">
+                        <Frame Margin="15,5" Padding="20" CornerRadius="16" HasShadow="True"
+                                   BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#2C3E50}"
+                                   BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#4A6572}">
+                            <VerticalStackLayout Spacing="12">
+                                <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                                    <Label Text="🧾 Nota: " FontAttributes="Bold" FontSize="18" TextColor="{AppThemeBinding Light=#34495E, Dark=#ECF0F1}"/>
+                                    <Label Text="{Binding nota_penjualan}" FontAttributes="Bold" FontSize="18" TextColor="#3498DB" HorizontalOptions="StartAndExpand"/>
+                                </HorizontalStackLayout>
+
+                                <BoxView HeightRequest="1" Color="{AppThemeBinding Light=#EEEEEE, Dark=#444444}" Margin="0,5"/>
+
+                                <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" ColumnSpacing="10" RowSpacing="5">
+                                    <Label Grid.Row="0" Grid.Column="0" Text="📅" FontSize="16" VerticalOptions="Center"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding tanggal_transaksi, StringFormat='Tanggal Transaksi: {0:dd MMMM yyyy}'}" FontSize="14" TextColor="{AppThemeBinding Light=#555555, Dark=#BDC3C7}"/>
+
+                                    <Label Grid.Row="1" Grid.Column="0" Text="🚚" FontSize="16" VerticalOptions="Center"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding status_pengiriman, StringFormat='Status Pengiriman: {0}'}" FontSize="14" FontAttributes="Bold" TextColor="#27AE60"/>
+
+                                    <Label Grid.Row="2" Grid.Column="0" Text="🗓️" FontSize="16" VerticalOptions="Center"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding jadwal_pengiriman, StringFormat='Jadwal Pengambilan: {0:dd MMMM yyyy HH:mm}'}" FontSize="14" TextColor="{AppThemeBinding Light=#555555, Dark=#BDC3C7}"/>
+                                </Grid>
+
+                                <BoxView HeightRequest="1" Color="{AppThemeBinding Light=#EEEEEE, Dark=#444444}" Margin="0,5"/>
+
+                                <Label Text="Daftar Barang:" FontAttributes="Bold" FontSize="15" TextColor="{AppThemeBinding Light=#34495E, Dark=#ECF0F1}" Margin="0,5,0,0"/>
+
+                                <VerticalStackLayout BindableLayout.ItemsSource="{Binding rincian_penjualans}" Spacing="5">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="model:RincianPenjualan">
+                                            <Frame Padding="10" CornerRadius="8" BackgroundColor="{AppThemeBinding Light=#F0F4F8, Dark=#3E5C76}" BorderColor="{AppThemeBinding Light=#D0D0D0, Dark=#5B7B8B}">
+                                                <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10">
+                                                    <Label Grid.Row="0" Grid.Column="0" Text="📦" FontSize="14" VerticalOptions="Center"/>
+                                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding barang.nama_barang}" FontAttributes="Bold" FontSize="14" TextColor="{AppThemeBinding Light=#333333, Dark=#ECF0F1}"/>
+                                                    <Label Grid.Row="0" Grid.Column="2" Text="{Binding jumlah_barang, StringFormat='x {0}'}" FontSize="14" TextColor="{AppThemeBinding Light=#555555, Dark=#BDC3C7}" HorizontalOptions="End"/>
+
+                                                    <Label Grid.Row="1" Grid.Column="0" Text="🏅" FontSize="14" VerticalOptions="Center"/>
+                                                    <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding barang.komisi_hunter, StringFormat='Komisi: Rp {0:N0}'}" FontAttributes="Bold" FontSize="15" TextColor="#28A745"/>
+                                                </Grid>
+                                            </Frame>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </VerticalStackLayout>
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+</ContentPage>

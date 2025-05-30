@@ -36,7 +36,7 @@
     </ContentPage.Resources>
 
     <ScrollView>
-        <Grid Padding="20" RowSpacing="16" RowDefinitions="Auto, Auto, Auto, Auto">
+        <Grid Padding="20" RowSpacing="16" RowDefinitions="Auto, Auto, Auto, Auto, Auto">
             <Frame Grid.Row="0"
                    Padding="0"
                    WidthRequest="120"
@@ -85,7 +85,30 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <Button Grid.Row="3"
+            <Frame Grid.Row="3">
+                <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto">
+                    <VerticalStackLayout Grid.Column="0" Spacing="8">
+                        <Label Text="Histori Komisi Saya"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Style="{StaticResource Primary}"/>
+                        <Label Text="Lihat daftar komisi anda"
+                    FontSize="12"
+                    TextColor="#777"/>
+                    </VerticalStackLayout>
+                    <ImageButton Grid.Column="1"
+                      Source="chevron.png"
+                      BackgroundColor="Transparent"
+                      WidthRequest="10"
+                      HeightRequest="10"
+                      VerticalOptions="Center"/>
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToHistoryCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+
+            <Button Grid.Row="4"
                     Text="Logout"
                     Command="{Binding LogoutCommand}"
                     HorizontalOptions="Fill" />
