@@ -392,5 +392,27 @@ namespace P3L_V1.Services
                 throw;
             }
         }
+
+        public async Task PostPenukaranReward(int id_pembeli, int id_merchandise)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+                var penukaran = new Penukaran
+                {
+                    id_pembeli = id_pembeli,
+                    id_merchandise = id_merchandise
+                };
+                var json = JsonConvert.SerializeObject(penukaran);
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"{BaseUrl}/penukaran", data);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

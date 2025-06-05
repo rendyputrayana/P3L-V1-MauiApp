@@ -67,7 +67,7 @@
 
             <Frame Grid.Row="3">
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="saldo Akun"
+                    <Label Text="Poin Reward"
                            FontAttributes="Bold"
                            FontSize="16"
                            Style="{StaticResource Primary}"
@@ -79,30 +79,6 @@
                            TextColor="#27ae60"
                            HorizontalOptions="Center" />
                 </VerticalStackLayout>
-            </Frame>
-
-            <Frame Grid.Row="2">
-                <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto">
-                    <VerticalStackLayout Grid.Column="0" Spacing="8">
-                        <Label Text="Alamat Saya"
-                               FontAttributes="Bold"
-                               FontSize="16"
-                               Style="{StaticResource Primary}"/>
-                        <Label Text="Kelola dan lihat daftar alamat pengiriman Anda"
-                               FontSize="12"
-                               TextColor="#777"/>
-                    </VerticalStackLayout>
-                    <ImageButton Grid.Column="1"
-                                 Source="chevron.png"
-                                 BackgroundColor="Transparent"
-                                 WidthRequest="10"
-                                 HeightRequest="10"
-                                 VerticalOptions="Center"
-                                 Command="{Binding GoToDaftarAlamatCommand}"/>
-                </Grid>
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GoToDaftarAlamatCommand}" />
-                </Frame.GestureRecognizers>
             </Frame>
 
             <Button Grid.Row="4"

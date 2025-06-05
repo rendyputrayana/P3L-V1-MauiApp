@@ -18,5 +18,6 @@ namespace P3L_V1.Model
         public int poin { get; set; }
 
         public int stok { get; set; }
+
     }
 }

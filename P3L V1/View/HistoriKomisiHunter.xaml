@@ -22,13 +22,7 @@
                                    BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#2C3E50}"
                                    BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#4A6572}">
                             <VerticalStackLayout Spacing="12">
-                                <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand">
-                                    <Label Text="🧾 Nota: " FontAttributes="Bold" FontSize="18" TextColor="{AppThemeBinding Light=#34495E, Dark=#ECF0F1}"/>
-                                    <Label Text="{Binding nota_penjualan}" FontAttributes="Bold" FontSize="18" TextColor="#3498DB" HorizontalOptions="StartAndExpand"/>
-                                </HorizontalStackLayout>
-
-                                <BoxView HeightRequest="1" Color="{AppThemeBinding Light=#EEEEEE, Dark=#444444}" Margin="0,5"/>
-
+                                
                                 <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" ColumnSpacing="10" RowSpacing="5">
                                     <Label Grid.Row="0" Grid.Column="0" Text="📅" FontSize="16" VerticalOptions="Center"/>
                                     <Label Grid.Row="0" Grid.Column="1" Text="{Binding tanggal_transaksi, StringFormat='Tanggal Transaksi: {0:dd MMMM yyyy}'}" FontSize="14" TextColor="{AppThemeBinding Light=#555555, Dark=#BDC3C7}"/>
