@@ -52,7 +52,7 @@ namespace P3L_V1.Model
         public bool perpanjang { get; set; }
 
         [JsonProperty("garansi")]
-        public DateTime garansi { get; set; }
+        public DateTime? garansi { get; set; }
 
         [JsonProperty("foto_barang")]
         public FotoBarang foto_barang { get; set; }
