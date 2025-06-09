@@ -28,7 +28,7 @@ namespace P3L_V1.Model
         public int ongkos_kirim { get; set; }
 
         [JsonProperty("poin")]
-        public int poin { get; set; }
+        public int? poin { get; set; }
 
         [JsonProperty("tanggal_diterima")]
         public DateTime? tanggal_diterima { get; set; }
@@ -52,7 +52,7 @@ namespace P3L_V1.Model
         public int id_alamat { get; set; }
 
         [JsonProperty("created_at")]
-        public DateTime created_at { get; set; }
+        public DateTime? created_at { get; set; }
 
         [JsonProperty("updated_at")]
         public DateTime updated_at { get; set; }
