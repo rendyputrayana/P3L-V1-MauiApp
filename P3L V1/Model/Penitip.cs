@@ -29,5 +29,8 @@ namespace P3L_V1.Model
 
         [JsonProperty("saldo")]
         public int saldo { get; set; }
+
+        [JsonProperty("poin")]
+        public int? poin { get; set; }
     }
 }

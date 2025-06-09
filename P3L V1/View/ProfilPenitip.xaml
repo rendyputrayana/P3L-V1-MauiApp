@@ -28,7 +28,7 @@
     </ContentPage.Resources>
 
     <ScrollView>
-        <Grid RowDefinitions="Auto, Auto, Auto, Auto" Padding="20" RowSpacing="16">
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto" Padding="20" RowSpacing="16">
             <Frame Grid.Row="0"
                    Padding="0"
                    WidthRequest="120"
@@ -50,7 +50,7 @@
                            HorizontalOptions="Center" />
                     <BoxView Style="{StaticResource Separator}" />
 
-                    <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, *" RowSpacing="8" ColumnSpacing="10">
+                    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, *" RowSpacing="8" ColumnSpacing="10">
                         <Label Grid.Row="0" Grid.Column="0" Text="Nama" FontAttributes="Bold" />
                         <Label Grid.Row="0" Grid.Column="1" Text="{Binding MyPenitip.nama_penitip}" />
 
@@ -62,6 +62,9 @@
 
                         <Label Grid.Row="3" Grid.Column="0" Text="Alamat" FontAttributes="Bold" />
                         <Label Grid.Row="3" Grid.Column="1" Text="{Binding MyPenitip.alamat_penitip}" />
+
+                        <Label Grid.Row="4" Grid.Column="0" Text="Poin" FontAttributes="Bold" />
+                        <Label Grid.Row="4" Grid.Column="1" Text="{Binding MyPenitip.poin}" />
                     </Grid>
                 </VerticalStackLayout>
             </Frame>
@@ -105,7 +108,7 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <Button Grid.Row="3"
+            <Button Grid.Row="4"
                     Text="Logout"
                     Command="{Binding LogoutCommand}"
                     HorizontalOptions="Fill" />
