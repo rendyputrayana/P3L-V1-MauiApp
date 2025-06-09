@@ -379,11 +379,30 @@ namespace P3L_V1.Services
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+              
                 var response = await _httpClient.GetAsync($"{BaseUrl}/historyHunterByIdHunter/{id_hunter}");
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<ApiResponse<List<PenjualanHunter>>>(json);
+                return result.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+        public async Task<List<PenjualanPlusAlamat>> getPenjualanByIdKurir(string id_kurir)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+                var response = await _httpClient.GetAsync($"{BaseUrl}/penjualan/kurir/{id_kurir}");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponse<List<PenjualanPlusAlamat>>>(json);
                 return result.Data;
             }
             catch (Exception e)
@@ -407,6 +426,116 @@ namespace P3L_V1.Services
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync($"{BaseUrl}/penukaran", data);
                 response.EnsureSuccessStatusCode();
+              }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+      
+        public async Task VerifikasiPengiriman(string nota_penjualan)
+        {
+            try
+            {
+                VerifiPengirimanKurir data = new VerifiPengirimanKurir
+                {
+                    id_pegawai = Preferences.Get("idRole", String.Empty),
+                    nota_penjualan = nota_penjualan
+                };
+
+                var json = JsonConvert.SerializeObject(data);
+
+                var postStringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync(BaseUrl + "/penjualan/kurir", postStringContent);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task SelesaikanPenjualan(string nota_penjualan)
+        {
+            try
+            {
+                VerifiPengirimanKurir data = new VerifiPengirimanKurir
+                {
+                    id_pegawai = Preferences.Get("idRole", String.Empty),
+                    nota_penjualan = nota_penjualan
+                };
+
+                var json = JsonConvert.SerializeObject(data);
+
+                var postStringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync(BaseUrl + "/selesaikanPenjualanKurir", postStringContent);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<List<Penjualan>> getPenjualanById(string id_pembeli)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+                var response = await _httpClient.GetAsync($"{BaseUrl}/penjualan/pembeli/{id_pembeli}");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponse<List<Penjualan>>>(json);
+                return result.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<List<BarangPlusRincianPenjualan>> GetPenitipanById(string id_penitip)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+                var response = await _httpClient.GetAsync($"{BaseUrl}/penitipan/{id_penitip}");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponse<List<BarangPlusRincianPenjualan>>>(json);
+                return result.Data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<List<PenjualanPlusAlamat>> GetHistoryPengirimanByIdKurir(string id_kurir)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Preferences.Get("token", string.Empty));
+                var response = await _httpClient.GetAsync($"{BaseUrl}/pengiriman/{id_kurir}");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<ApiResponse<List<PenjualanPlusAlamat>>>(json);
+
+                foreach (var penjualanPlusAlamat in result.Data)
+                {
+                    
+                }
+                return result.Data;
             }
             catch (Exception e)
             {

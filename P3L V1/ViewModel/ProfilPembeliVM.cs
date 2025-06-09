@@ -65,5 +65,19 @@ namespace P3L_V1.ViewModel
                 throw;
             }
         }
+
+        [RelayCommand]
+        public void GoToHistory()
+        {
+            try
+            {
+                Shell.Current.GoToAsync(nameof(HistoryPembelian));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

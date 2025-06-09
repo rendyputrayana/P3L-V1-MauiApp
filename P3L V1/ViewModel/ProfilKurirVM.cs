@@ -74,5 +74,19 @@ namespace P3L_V1.ViewModel
                 IsBusy = false;
             }
         }
+
+        [RelayCommand]
+        public async Task GoToHistoryPengiriman()
+        {
+            try
+            {
+                Shell.Current.GoToAsync(nameof(HistoryPengiriman));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

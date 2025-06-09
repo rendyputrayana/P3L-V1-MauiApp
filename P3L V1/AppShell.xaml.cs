@@ -13,8 +13,12 @@ namespace P3L_V1
             Routing.RegisterRoute(nameof(SubkategoriPage), typeof(SubkategoriPage));
             Routing.RegisterRoute(nameof(DetailMerchandisePage), typeof(DetailMerchandisePage));
             Routing.RegisterRoute(nameof(DetailBarang), typeof(DetailBarang));
-
             Routing.RegisterRoute(nameof(HistoriKomisiHunter), typeof(HistoriKomisiHunter));
+            Routing.RegisterRoute(nameof(ProfilGuest), typeof(ProfilGuest));
+            Routing.RegisterRoute(nameof(HistoryPembelian), typeof(HistoryPembelian));
+            Routing.RegisterRoute(nameof(HistoryPenitip), typeof(HistoryPenitip));
+            Routing.RegisterRoute(nameof(HistoryPengiriman), typeof(HistoryPengiriman));
+
         }
     }
 }

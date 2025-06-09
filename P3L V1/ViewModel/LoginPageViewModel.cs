@@ -52,6 +52,21 @@ namespace P3L_V1.ViewModel
             }
         }
 
+        [RelayCommand]
+        public async Task LoginAsGuest()
+        {
+            try
+            {
+                IsBusy = true;
+                MainThread.BeginInvokeOnMainThread(() => SetTabs("Guest"));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
         private void SetTabs(string role)
         {
             Preferences.Set("username", Username);
@@ -71,17 +86,22 @@ namespace P3L_V1.ViewModel
                     tabBar.Items.Add(new ShellContent {Title = "Kategori", ContentTemplate = new DataTemplate(typeof(KategoriPage)), Icon = "list.svg"});
                     tabBar.Items.Add(new ShellContent { Title = "Profil", ContentTemplate = new DataTemplate(typeof(ProfilPenitip)), Icon = "circle_user.svg" });
                     break;
-                case "Pegawai":
+                case "Kurir":
+                    tabBar.Items.Add(new ShellContent { Title = "Pengiriman", ContentTemplate = new DataTemplate(typeof(Pengiriman)), Icon = "delivery_truck.svg" });
                     tabBar.Items.Add(new ShellContent { Title = "Profil", ContentTemplate = new DataTemplate(typeof(ProfilKurir)), Icon = "circle_user.svg" });
                     break;
                 case "Hunter":
                     tabBar.Items.Add(new ShellContent { Title = "Profil", ContentTemplate = new DataTemplate(typeof(ProfilHunter)), Icon = "circle_user.svg" });
+                    break;
+                case "Guest":
+                    tabBar.Items.Add(new ShellContent {Title = "Profil", ContentTemplate = new DataTemplate(typeof(ProfilGuest)), Icon = "circle_user.svg"});
                     break;
                 default:
                     tabBar.Items.Add(new ShellContent { Title = "Profil", ContentTemplate = new DataTemplate(typeof(ProfilPembeli)), Icon = "circle_user.svg" });
                     break;
             }
             Shell.Current.Items.Add(tabBar);
+
         }
     }
 }
