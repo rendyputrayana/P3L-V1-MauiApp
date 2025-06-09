@@ -36,7 +36,7 @@
     </ContentPage.Resources>
 
     <ScrollView>
-        <Grid Padding="20" RowSpacing="16" RowDefinitions="Auto, Auto, Auto">
+        <Grid Padding="20" RowSpacing="16" RowDefinitions="Auto, Auto, Auto, Auto">
             <Frame Grid.Row="0"
                    Padding="0"
                    WidthRequest="120"
@@ -66,6 +66,29 @@
                         <Label Grid.Row="1" Grid.Column="1" Text="{Binding MyKurir.tanggal_lahir}" />
                     </Grid>
                 </VerticalStackLayout>
+            </Frame>
+
+            <Frame Grid.Row="2">
+                <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto">
+                    <VerticalStackLayout Grid.Column="0" Spacing="8">
+                        <Label Text="History Pengiriman"
+                               FontAttributes="Bold"
+                               FontSize="16"
+                               Style="{StaticResource Primary}"/>
+                        <Label Text="Kelola dan lihat daftar tugas pengiriman Anda"
+                               FontSize="12"
+                               TextColor="#777"/>
+                    </VerticalStackLayout>
+                    <ImageButton Grid.Column="1"
+                                 Source="chevron.png"
+                                 BackgroundColor="Transparent"
+                                 WidthRequest="10"
+                                 HeightRequest="10"
+                                 VerticalOptions="Center"/>
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToHistoryPengirimanCommand}" />
+                </Frame.GestureRecognizers>
             </Frame>
 
             <Button Grid.Row="3"

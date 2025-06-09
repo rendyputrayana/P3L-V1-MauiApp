@@ -67,12 +67,24 @@
                                     <Label Text="{Binding updated_at, StringFormat='Diperbarui: {0:dd/MM/yyyy HH:mm}'}"
                                            FontSize="Micro" TextColor="#888" HorizontalOptions="End" Margin="0,5,0,0" />
                                     <BoxView HeightRequest="2" Color="#f0f0f0" />
-                                    <Button BackgroundColor="Coral" 
-                                            Text="Selesaikan Pengiriman" 
-                                            TextColor="Black" 
-                                            FontAttributes="Bold" FontSize="15"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PengirimanVM}}, Path=SelesaikanPengirimanCommand}"
-                                            CommandParameter="{Binding nota_penjualan}"/>
+                                    <Grid ColumnDefinitions="Auto,Auto"
+                                          HorizontalOptions="End"
+                                          ColumnSpacing="20">
+                                        <Button BackgroundColor="Coral" 
+                                                Grid.Column="0"
+                                                Text="Kirim" 
+                                                TextColor="Black" 
+                                                FontAttributes="Bold" FontSize="15"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PengirimanVM}}, Path=SelesaikanPengirimanCommand}"
+                                                CommandParameter="{Binding nota_penjualan}"/>
+                                        <Button BackgroundColor="LawnGreen" 
+                                                Grid.Column="1"
+                                                Text="Telah Diterima" 
+                                                TextColor="Black" 
+                                                FontAttributes="Bold" FontSize="15"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PengirimanVM}}, Path=TelahDiterimaCommand}"
+                                                CommandParameter="{Binding nota_penjualan}"/>
+                                    </Grid>
                                 </VerticalStackLayout>
                             </Border>
                         </DataTemplate>

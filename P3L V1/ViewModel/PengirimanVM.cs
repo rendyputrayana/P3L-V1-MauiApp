@@ -84,6 +84,38 @@ namespace P3L_V1.ViewModel
         }
 
         [RelayCommand]
+        public async Task TelahDiterima(int nota_penjualan)
+        {
+            try
+            {
+                IsBusy = true;
+                string nota = nota_penjualan.ToString();
+                await _apiService.SelesaikanPenjualan(nota);
+
+                var id_kurir = Preferences.Get("idRole", String.Empty);
+                var responsePengiriman = await _apiService.getPenjualanByIdKurir(id_kurir);
+
+                if (responsePengiriman.Count != 0)
+                {
+                    Pengiriman.Clear();
+                    foreach (var penjualan in responsePengiriman)
+                    {
+                        Pengiriman.Add(penjualan);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
         public async Task SelesaikanPengiriman(int nota_penjualan)
         {
             try

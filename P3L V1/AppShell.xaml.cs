@@ -16,6 +16,7 @@ namespace P3L_V1
             Routing.RegisterRoute(nameof(ProfilGuest), typeof(ProfilGuest));
             Routing.RegisterRoute(nameof(HistoryPembelian), typeof(HistoryPembelian));
             Routing.RegisterRoute(nameof(HistoryPenitip), typeof(HistoryPenitip));
+            Routing.RegisterRoute(nameof(HistoryPengiriman), typeof(HistoryPengiriman));
         }
     }
 }

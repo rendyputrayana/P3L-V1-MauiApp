@@ -21,8 +21,7 @@
                         <DataTemplate x:DataType="model:BarangPlusRincianPenjualan">
                             <Frame CornerRadius="12"         Padding="16"
                                    Margin="0,8"             BackgroundColor="#FFFFFF"
-                                   BorderColor="#E0E0E0"    HasShadow="True"
-                                   Shadow="{OnPlatform iOS='0,2,8,#00000020', Android='0,4,12,#00000030'}">
+                                   BorderColor="#E0E0E0"    HasShadow="True">
                                 <VerticalStackLayout Spacing="8">
                                     <Grid ColumnDefinitions="Auto, *, Auto ">
                                         <Label FontSize="22" FontAttributes="Bold" TextColor="#212121" Grid.Column="0">
