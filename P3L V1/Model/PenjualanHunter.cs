@@ -28,7 +28,7 @@ namespace P3L_V1.Model
         public int ongkos_kirim { get; set; }
 
         [JsonProperty("poin")]
-        public int poin { get; set; }
+        public int? poin { get; set; }
 
         [JsonProperty("tanggal_diterima")]
         public string tanggal_diterima { get; set; }
