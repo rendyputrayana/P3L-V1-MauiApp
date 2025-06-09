@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="P3L_V1.View.HistoryPengiriman"
+             Title="📦 History Pengiriman"
+             xmlns:viewmodel="clr-namespace:P3L_V1.ViewModel"
+             x:DataType="viewmodel:HistoryPengirimanVM"
+             xmlns:model="clr-namespace:P3L_V1.Model"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             BackgroundColor="#f4f6f9">
+
+    <Grid RowDefinitions="Auto, *" ColumnDefinitions="*" Padding="16">
+        <!-- Loading indicator -->
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Grid.Row="1"
+                           Color="{StaticResource Primary}" />
+
+        <!-- Main content -->
+        <VerticalStackLayout Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
+            <CollectionView ItemsSource="{Binding HistoryPengiriman}"
+                            SelectionMode="None"
+                            EmptyView="❌ Tidak ada history pengiriman 😢">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:PenjualanPlusAlamat">
+                        <Border Stroke="#e0e0e0"
+                                StrokeThickness="1"
+                                BackgroundColor="White"
+                                Padding="16"
+                                Margin="0,0,0,12"
+                                StrokeShape="RoundRectangle 12">
+                            <VerticalStackLayout Spacing="6">
+                                <!-- Header -->
+                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding nota_penjualan, StringFormat='📄 Nota: #{0}'}"
+                                           FontAttributes="Bold"
+                                           TextColor="Black"/>
+                                    <Border Grid.Column="1"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="Center"
+                                            Padding="4,2"
+                                            BackgroundColor="LightGreen"
+                                            StrokeShape="RoundRectangle 8">
+                                        <Label Text="{Binding status_pengiriman, StringFormat='🚚 {0}'}"
+                                               FontSize="12"
+                                               TextColor="DarkGreen"/>
+                                    </Border>
+                                </Grid>
+
+                                <BoxView HeightRequest="1"
+                                         Margin="0,8"
+                                         Color="#ccc"/>
+
+                                <!-- Informasi detail -->
+                                <Label Text="{Binding jadwal_pengiriman, StringFormat='🗓️ Tanggal: {0:dddd, dd MMM yyyy}'}"
+                                       TextColor="DarkSlateGray"/>
+                                <Label Text="{Binding total_harga, StringFormat='💰 Total: Rp {0:N2}'}"
+                                       TextColor="DarkSlateGray"/>
+                                <Label Text="{Binding alamat.detail_alamat, StringFormat='📍 Tujuan: {0}'}"
+                                       TextColor="DarkSlateGray"/>
+                                <Label Text="{Binding alamat.pembeli.nama_pembeli, StringFormat='🧑 Pembeli: {0}'}"
+                                       TextColor="DarkSlateGray"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </Grid>
+
+    <!-- Memanggil perintah saat muncul -->
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+</ContentPage>

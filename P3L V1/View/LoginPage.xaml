@@ -30,7 +30,7 @@
             <Entry Placeholder="Password"
                    IsPassword="True" 
                    Text="{Binding Password}"/>
-            <Button Text="Sign In"
+            <Button Text="Login"
                     HeightRequest="50"
                     FontSize="Medium"
                     BackgroundColor="#1d94ab" 
@@ -39,9 +39,13 @@
                 <Label Text="Not a member? "
                        FontSize="Medium"
                        TextColor="#101010" />
-                <Label Text="Join now"
+                <Label Text="Login as Guest"
                        FontSize="Medium"
-                       TextColor="#1d94ab" />
+                       TextColor="#1d94ab" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LoginAsGuestCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
             </HorizontalStackLayout>
         </VerticalStackLayout>
         <Grid IsVisible="{Binding IsBusy}" BackgroundColor="#80000000">

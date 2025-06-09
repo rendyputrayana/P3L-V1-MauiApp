@@ -64,5 +64,19 @@ namespace P3L_V1.ViewModel
                 throw;
             }
         }
+
+        [RelayCommand]
+        public async Task GoToHistoryPenitipan()
+        {
+            try
+            {
+                await Shell.Current.GoToAsync(nameof(HistoryPenitip));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="P3L_V1.View.Pengiriman"
+             Title="📦 Jadwal Pengiriman Hari Ini"
+             xmlns:viewmodel="clr-namespace:P3L_V1.ViewModel"
+             x:DataType="viewmodel:PengirimanVM"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             BackgroundColor="#f4f6f9"
+             xmlns:model="clr-namespace:P3L_V1.Model">
+
+    <Grid RowDefinitions="Auto, *" ColumnDefinitions="*" Padding="16">
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Grid.Row="1"
+                           Grid.Column="0"
+                           Color="{StaticResource Primary}" />
+        <ScrollView Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
+            <VerticalStackLayout>
+                <CollectionView ItemsSource="{Binding Pengiriman}"
+                                SelectionMode="None"
+                                EmptyView="❌ Tidak ada jadwal pengiriman hari ini.">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:PenjualanPlusAlamat">
+                            <Border Stroke="#e0e0e0"
+                                    StrokeThickness="1"
+                                    BackgroundColor="White"
+                                    Padding="16"
+                                    Margin="0,0,0,12"
+                                    StrokeShape="RoundRectangle 12">
+                                <VerticalStackLayout Spacing="10">
+
+                                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto">
+                                        <Label Grid.Column="0" Text="{Binding nota_penjualan, StringFormat='Nota: {0}'}"
+                                               FontAttributes="Bold" FontSize="Medium" TextColor="#333" />
+                                        <Label Grid.Column="1" Text="{Binding status_pengiriman}"
+                                               FontAttributes="Bold" TextColor="Green"
+                                               HorizontalOptions="End" VerticalOptions="Center" />
+                                    </Grid>
+                                    <BoxView HeightRequest="2" Color="#f0f0f0" />
+                                    <HorizontalStackLayout Spacing="20">
+                                        <Label Text="👤" FontSize="18" VerticalOptions="Center" />
+                                        <VerticalStackLayout Spacing="2">
+                                            <Label Text="{Binding alamat.pembeli.nama_pembeli}" FontAttributes="Bold" TextColor="#000" FontSize="16" />
+                                            <Label Text="{Binding alamat.detail_alamat}" TextColor="#555" LineBreakMode="WordWrap" />
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="20">
+                                        <Label Text="🗓️" FontSize="18" VerticalOptions="Center" />
+                                        <VerticalStackLayout Spacing="2">
+                                            <Label Text="{Binding jadwal_pengiriman, StringFormat='Jadwal: {0:dd MMMM yyyy}'}" FontAttributes="Bold" TextColor="#000" />
+                                            <Label Text="{Binding metode_pengiriman, StringFormat='Metode: {0}'}" TextColor="#555" />
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="20">
+                                        <Label Text="💸" FontSize="18" VerticalOptions="Center" />
+                                        <VerticalStackLayout Spacing="2">
+                                            <Label Text="{Binding total_harga, StringFormat='Total: Rp {0:N0}'}" FontAttributes="Bold" TextColor="#000" />
+                                            <Label Text="{Binding ongkos_kirim, StringFormat='Ongkir: Rp {0:N0}'}" TextColor="#555" />
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
+
+                                    <Label Text="{Binding updated_at, StringFormat='Diperbarui: {0:dd/MM/yyyy HH:mm}'}"
+                                           FontSize="Micro" TextColor="#888" HorizontalOptions="End" Margin="0,5,0,0" />
+                                    <BoxView HeightRequest="2" Color="#f0f0f0" />
+                                    <Grid ColumnDefinitions="Auto,Auto"
+                                          HorizontalOptions="End"
+                                          ColumnSpacing="20">
+                                        <Button BackgroundColor="Coral" 
+                                                Grid.Column="0"
+                                                Text="Kirim" 
+                                                TextColor="Black" 
+                                                FontAttributes="Bold" FontSize="15"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PengirimanVM}}, Path=SelesaikanPengirimanCommand}"
+                                                CommandParameter="{Binding nota_penjualan}"/>
+                                        <Button BackgroundColor="LawnGreen" 
+                                                Grid.Column="1"
+                                                Text="Telah Diterima" 
+                                                TextColor="Black" 
+                                                FontAttributes="Bold" FontSize="15"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:PengirimanVM}}, Path=TelahDiterimaCommand}"
+                                                CommandParameter="{Binding nota_penjualan}"/>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior EventName="Appearing" Command="{Binding AppearingCommand}" />
+    </ContentPage.Behaviors>
+</ContentPage>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="P3L_V1.View.HistoryPembelian"
+             Title="🧾 Riwayat Transaksi"
+             xmlns:viewmodel="clr-namespace:P3L_V1.ViewModel"
+             x:DataType="viewmodel:HistoryPembelianVM"
+             xmlns:model="clr-namespace:P3L_V1.Model"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="PrimaryColor">#2196F3</Color>
+            <Color x:Key="AccentColor">#FFC107</Color>
+            <Color x:Key="TextColor">#333333</Color>
+            <Color x:Key="LightGrayColor">#EEEEEE</Color>
+            <Color x:Key="DarkGrayColor">#666666</Color>
+            <Color x:Key="CardBackgroundColor">#FFFFFF</Color>
+            <Color x:Key="SuccessColor">#4CAF50</Color>
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+            </Style>
+
+            <Style x:Key="SeparatorStyle" TargetType="BoxView">
+                <Setter Property="HeightRequest" Value="1" />
+                <Setter Property="Color" Value="{StaticResource LightGrayColor}" />
+                <Setter Property="Margin" Value="0,5" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, Auto, *" RowSpacing="0" Padding="0">
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Color="{StaticResource AccentColor}"
+                           Margin="0,20,0,0"/>
+
+        <!-- CollectionView -->
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Penjualan}"
+                        SelectionMode="None"
+                        IsVisible="{Binding IsBusy, Converter={mct:InvertedBoolConverter}}"
+                        Margin="15">
+
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="20">
+                        <Label Text="🛒" FontSize="48" HorizontalOptions="Center"/>
+                        <Label Text="Ups, belum ada riwayat pembelian."
+                               FontAttributes="Italic"
+                               TextColor="{StaticResource DarkGrayColor}"
+                               FontSize="Medium"
+                               HorizontalTextAlignment="Center"/>
+                        <Label Text="Mulai jelajahi produk kami dan buat transaksi pertama Anda!"
+                               TextColor="{StaticResource DarkGrayColor}"
+                               FontSize="Small"
+                               HorizontalTextAlignment="Center"
+                               Margin="0,5,0,0"/>
+                    </VerticalStackLayout>
+                </ContentView>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Penjualan">
+                    <Frame Margin="0,7"
+                           Padding="15"
+                           HasShadow="True"
+                           CornerRadius="15"
+                           BackgroundColor="{StaticResource CardBackgroundColor}"
+                           BorderColor="{StaticResource LightGrayColor}">
+
+                        <VerticalStackLayout Spacing="10">
+                            <!-- Header -->
+                            <Grid ColumnDefinitions="Auto, *, Auto">
+                                <Label Text="📄" FontSize="22" Grid.Column="0" Margin="0,0,10,0" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding nota_penjualan, StringFormat='Nota: #{0}'}"
+                                       FontAttributes="Bold" FontSize="Medium" VerticalOptions="Center"/>
+                                <Label Grid.Column="2" Text="{Binding tanggal_transaksi, StringFormat='{0:dd MMM yyyy}'}"
+                                       FontSize="Small" TextColor="{StaticResource DarkGrayColor}" VerticalOptions="Center"/>
+                            </Grid>
+
+                            <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                            <!-- Status dan Total -->
+                            <Grid ColumnDefinitions="*, Auto">
+                                <HorizontalStackLayout Grid.Column="0" Spacing="5">
+                                    <Label Text="📌 Status:" FontAttributes="Bold"/>
+                                    <Label Text="{Binding status_penjualan}"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Grid.Column="1" Spacing="5">
+                                    <Label Text="💰 Total:" FontAttributes="Bold"/>
+                                    <Label Text="{Binding total_harga, StringFormat='Rp {0:N0}'}"
+                                           TextColor="{StaticResource SuccessColor}" FontAttributes="Bold"/>
+                                </HorizontalStackLayout>
+                            </Grid>
+
+                            <!-- Expander -->
+                            <mct:Expander>
+                                <mct:Expander.Header>
+                                    <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                                        <Label Text="🔍" FontSize="16"/>
+                                        <Label Text="Lihat Detail Transaksi"
+                                               FontAttributes="Bold"
+                                               TextColor="{StaticResource PrimaryColor}"
+                                               FontSize="Small"/>
+                                    </HorizontalStackLayout>
+                                </mct:Expander.Header>
+
+                                <mct:Expander.Content>
+                                    <VerticalStackLayout Padding="10,5,0,0" Spacing="5">
+                                        <Grid ColumnDefinitions="Auto, *"
+                                              RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                                              RowSpacing="4">
+
+                                            <Label Grid.Row="0" Grid.Column="0" Text="📅 Lunas Tgl:" FontAttributes="Bold"/>
+                                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding tanggal_lunas}"/>
+
+                                            <Label Grid.Row="1" Grid.Column="0" Text="🚚 Ongkir:" FontAttributes="Bold"/>
+                                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding ongkos_kirim, StringFormat='Rp {0:N0}'}"/>
+
+                                            <Label Grid.Row="2" Grid.Column="0" Text="🎁 Poin:" FontAttributes="Bold"/>
+                                            <Label Grid.Row="2" Grid.Column="1" Text="{Binding poin}"/>
+
+                                            <Label Grid.Row="3" Grid.Column="0" Text="📦 Diterima Tgl:" FontAttributes="Bold"/>
+                                            <Label Grid.Row="3" Grid.Column="1" Text="{Binding tanggal_diterima}"/>
+
+                                            <Label Grid.Row="4" Grid.Column="0" Text="📮 Pengiriman:" FontAttributes="Bold"/>
+                                            <Label Grid.Row="4" Grid.Column="1" Text="{Binding status_pengiriman}"/>
+
+                                            <Label Grid.Row="5" Grid.Column="0" Text="🚚 Metode Kirim:" FontAttributes="Bold"/>
+                                            <Label Grid.Row="5" Grid.Column="1" Text="{Binding metode_pengiriman}"/>
+
+                                            <Label Grid.Row="6" Grid.Column="0" Text="🗓️ Jadwal Kirim:" FontAttributes="Bold"/>
+                                            <Label Grid.Row="6" Grid.Column="1" Text="{Binding jadwal_pengiriman}"/>
+                                        </Grid>
+
+                                        <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                                        <!-- Rincian Barang -->
+                                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                                            <Label Text="📦" FontSize="16"/>
+                                            <Label Text="Rincian Barang:" FontAttributes="Bold" FontSize="Small"/>
+                                        </HorizontalStackLayout>
+
+                                        <CollectionView ItemsSource="{Binding rincian_penjualan}" Margin="0,5,0,0">
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate x:DataType="model:RincianPenjualan">
+                                                    <Grid ColumnDefinitions="*, Auto" Margin="0,3">
+                                                        <Label Grid.Column="0" Text="{Binding barang.nama_barang}" VerticalOptions="Center"/>
+                                                        <Label Grid.Column="1"
+                                                               Text="{Binding barang.harga_barang, StringFormat='Rp {0:N0}'}"
+                                                               HorizontalTextAlignment="End"
+                                                               FontAttributes="Bold"
+                                                               TextColor="{StaticResource TextColor}"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+
+                                    </VerticalStackLayout>
+                                </mct:Expander.Content>
+                            </mct:Expander>
+
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

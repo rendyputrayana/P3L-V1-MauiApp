@@ -97,11 +97,33 @@
                                  BackgroundColor="Transparent"
                                  WidthRequest="10"
                                  HeightRequest="10"
-                                 VerticalOptions="Center"
-                                 Command="{Binding GoToDaftarAlamatCommand}"/>
+                                 VerticalOptions="Center"/>
                 </Grid>
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoToDaftarAlamatCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+
+            <Frame Grid.Row="3">
+                <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto">
+                    <VerticalStackLayout Grid.Column="0" Spacing="8">
+                        <Label Text="History Pembelian"
+                               FontAttributes="Bold"
+                               FontSize="16"
+                               Style="{StaticResource Primary}"/>
+                        <Label Text="Kelola dan lihat daftar history pembelian Anda"
+                               FontSize="12"
+                               TextColor="#777"/>
+                    </VerticalStackLayout>
+                    <ImageButton Grid.Column="1"
+                                 Source="chevron.png"
+                                 BackgroundColor="Transparent"
+                                 WidthRequest="10"
+                                 HeightRequest="10"
+                                 VerticalOptions="Center"/>
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToHistoryCommand}" />
                 </Frame.GestureRecognizers>
             </Frame>
 
