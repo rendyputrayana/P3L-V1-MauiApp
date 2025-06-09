@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="P3L_V1.View.MerchandisePage"
-             Title="Daftar Merchandise"
+             Title="🎁 Merchandise"
              xmlns:viewmodel="clr-namespace:P3L_V1.ViewModel"
              x:DataType="viewmodel:MerchandiseVM"
              xmlns:model="clr-namespace:P3L_V1.Model"
@@ -13,50 +13,62 @@
     </ContentPage.Behaviors>
 
     <ScrollView>
-        <VerticalStackLayout Padding="10" Spacing="10">
-            <CollectionView ItemsSource="{Binding ListMerchandise}">
+        <VerticalStackLayout Padding="16" Spacing="12" BackgroundColor="#F5F5F5">
+            <CollectionView ItemsSource="{Binding ListMerchandise}"
+                            SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:MerchandisePlusFoto">
-                        <Border
-                            Stroke="Gray"
-                            StrokeThickness="1"
-                            Padding="10"
-                            BackgroundColor="White"
-                            StrokeShape="RoundRectangle 12"
-                            Margin="0,5">
-                            <Grid ColumnDefinitions="auto,*,auto"
-                                  RowDefinitions="auto, auto, auto"
-                                  ColumnSpacing="10">
-                                <Image 
-                                    Source="{Binding foto}" 
-                                    WidthRequest="80" 
-                                    HeightRequest="80"
-                                    Aspect="AspectFill"
-                                    Grid.RowSpan="3"
-                                    VerticalOptions="Center" />
+                        <Frame HasShadow="True"
+                               CornerRadius="16"
+                               Padding="14"
+                               BackgroundColor="White"
+                               BorderColor="#DADADA"
+                               Margin="0,6">
+                            <Grid ColumnDefinitions="Auto,*,Auto"
+                                  RowDefinitions="Auto,Auto"
+                                  ColumnSpacing="14"
+                                  RowSpacing="4">
 
-                                <Label 
-                                    Text="{Binding nama_merchandise}" 
-                                    FontAttributes="Bold" 
-                                    FontSize="18"
-                                    Grid.Column="1"
-                                    VerticalOptions="Center" />
+                                <Border StrokeShape="RoundRectangle 999"
+                                        HeightRequest="72"
+                                        WidthRequest="72"
+                                        BackgroundColor="Transparent"
+                                        Padding="0"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center"
+                                        >
+                                    <Image Source="{Binding foto}"
+                                           Aspect="AspectFill"
+                                           HeightRequest="72"
+                                           WidthRequest="72" />
+                                </Border>
 
-                                <Label 
-                                    Text="{Binding poin, StringFormat='Poin: {0}'}"
-                                    FontSize="14"
-                                    Grid.Column="1"
-                                    Grid.Row="1"
-                                    TextColor="DarkGreen" />
+                                <VerticalStackLayout Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Spacing="4" VerticalOptions="Center">
+                                    <Label Text="{Binding nama_merchandise}" 
+                                           FontSize="17" 
+                                           FontAttributes="Bold"
+                                           TextColor="#222" />
+                                    <Label Text="{Binding poin, StringFormat='⭐ Poin: {0}'}"
+                                           FontSize="13"
+                                           TextColor="#388E3C" />
+                                    <Label Text="{Binding stok, StringFormat='📦 Stok: {0}'}"
+                                           FontSize="13"
+                                           TextColor="#D32F2F" />
+                                </VerticalStackLayout>
 
-                                <Label 
-                                    Text="{Binding stok, StringFormat='Stok: {0}'}"
-                                    FontSize="14"
-                                    Grid.Column="1"
-                                    Grid.Row="2"
-                                    TextColor="DarkRed" />
+                                <Button Text="Tukar"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MerchandiseVM}}, Path=PenukaranCommand}"
+                                        CommandParameter="{Binding id_merchandise}"
+                                        Grid.Column="2"
+                                        Grid.RowSpan="2"
+                                        VerticalOptions="Center"
+                                        BackgroundColor="#2196F3"
+                                        TextColor="White"
+                                        Padding="10,4"
+                                        CornerRadius="10"
+                                        FontSize="14" />
                             </Grid>
-                        </Border>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

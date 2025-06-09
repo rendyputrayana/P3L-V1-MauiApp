@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="P3L_V1.View.ProfilHunter"
-             Title="ProfilHunter"
+             Title="Profil Hunter"
              xmlns:viewmodel="clr-namespace:P3L_V1.ViewModel"
              x:DataType="viewmodel:ProfilHunterVM"
              BackgroundColor="#f4f6f9"
@@ -13,15 +13,16 @@
             <Setter Property="TextColor" Value="#333" />
         </Style>
         <Style TargetType="Frame">
-            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="CornerRadius" Value="16" />
             <Setter Property="BackgroundColor" Value="White" />
             <Setter Property="Padding" Value="16" />
             <Setter Property="HasShadow" Value="True" />
+            <Setter Property="Margin" Value="0,8" />
         </Style>
         <Style x:Key="Separator" TargetType="BoxView">
-            <Setter Property="Color" Value="#ccc" />
+            <Setter Property="Color" Value="#ddd" />
             <Setter Property="HeightRequest" Value="1" />
-            <Setter Property="Margin" Value="0,5" />
+            <Setter Property="Margin" Value="0,8" />
         </Style>
         <Style x:Key="Primary" TargetType="Label">
             <Setter Property="TextColor" Value="#3498db" />
@@ -29,36 +30,40 @@
         <Style TargetType="Button">
             <Setter Property="BackgroundColor" Value="#3498db" />
             <Setter Property="TextColor" Value="White" />
-            <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="HeightRequest" Value="45" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="HeightRequest" Value="48" />
             <Setter Property="FontAttributes" Value="Bold" />
         </Style>
     </ContentPage.Resources>
 
     <ScrollView>
-        <Grid Padding="20" RowSpacing="16" RowDefinitions="Auto, Auto, Auto, Auto">
-            <Frame Grid.Row="0"
-                   Padding="0"
+        <VerticalStackLayout Padding="20" Spacing="16">
+
+            <!-- Profile Picture -->
+            <Frame Padding="0"
                    WidthRequest="120"
                    HeightRequest="120"
                    CornerRadius="60"
-                   HorizontalOptions="Center">
+                   HorizontalOptions="Center"
+                   HasShadow="True">
                 <Image Source="delivery_truck.png"
                        Aspect="AspectFill"
                        WidthRequest="120"
-                       HeightRequest="120" />
+                       HeightRequest="120"
+                       />
             </Frame>
 
-            <Frame Grid.Row="1">
+            <!-- Informasi Hunter -->
+            <Frame>
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Informasi Hunter"
                            FontAttributes="Bold"
-                           FontSize="16"
+                           FontSize="18"
                            HorizontalOptions="Center"
-                           Style="{StaticResource Primary}"/>
-                    <BoxView Style="{StaticResource Separator}"/>
+                           Style="{StaticResource Primary}" />
+                    <BoxView Style="{StaticResource Separator}" />
 
-                    <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *" RowSpacing="8" ColumnSpacing="10">
+                    <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *" RowSpacing="8" ColumnSpacing="12">
                         <Label Grid.Row="0" Grid.Column="0" Text="Nama" FontAttributes="Bold" />
                         <Label Grid.Row="0" Grid.Column="1" Text="{Binding MyHunter.nama_hunter}" />
 
@@ -68,28 +73,52 @@
                 </VerticalStackLayout>
             </Frame>
 
-
-            <Frame Grid.Row="2">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="saldo Komisi Akun"
+            <!-- Saldo Komisi -->
+            <Frame>
+                <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="Saldo Komisi Akun"
                            FontAttributes="Bold"
-                           FontSize="16"
-                           TextColor="Aqua"
-                           HorizontalOptions="Center" />
+                           FontSize="18"
+                           TextColor="#3498db" />
                     <BoxView Style="{StaticResource Separator}" />
                     <Label Text="{Binding MyHunter.saldo, StringFormat='Rp {0:N0}'}"
-                           FontSize="20"
+                           FontSize="22"
                            FontAttributes="Bold"
-                           TextColor="#27ae60"
-                           HorizontalOptions="Center" />
+                           TextColor="#27ae60" />
                 </VerticalStackLayout>
             </Frame>
 
-            <Button Grid.Row="3"
-                    Text="Logout"
+            <!-- Histori Komisi Saya -->
+            <Frame>
+                <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto" Padding="0">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="Histori Komisi Saya"
+                               FontAttributes="Bold"
+                               FontSize="18"
+                               Style="{StaticResource Primary}" />
+                        <Label Text="Lihat daftar komisi anda"
+                               FontSize="13"
+                               TextColor="#666" />
+                    </VerticalStackLayout>
+                    <ImageButton Grid.Column="1"
+                                 Source="chevron.png"
+                                 BackgroundColor="Transparent"
+                                 WidthRequest="14"
+                                 HeightRequest="14"
+                                 VerticalOptions="Center" />
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToHistoryCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+
+            <!-- Logout Button -->
+            <Button Text="Logout"
                     Command="{Binding LogoutCommand}"
-                    HorizontalOptions="Fill" />
-        </Grid>
+                    HorizontalOptions="Fill"
+                    Margin="0,10" />
+
+        </VerticalStackLayout>
     </ScrollView>
 
     <ContentPage.Behaviors>

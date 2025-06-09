@@ -144,10 +144,6 @@
 
                 <Label Text="Informasi Tambahan" FontAttributes="Bold" FontSize="18" IsVisible="{Binding IsGaransi}"/>
                 <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" ColumnSpacing="10">
-                    <Label Text="Rating:"  FontSize="14" TextColor="#666" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" 
-                           IsVisible="{Binding IsGaransi}"/>
-                    <Label Text="{Binding SelectedBarang.rating_barang}"  FontSize="14" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" IsVisible="{Binding IsGaransi}"/>
-
                     <Label IsVisible="{Binding IsGaransi, Converter={StaticResource NotNullConverter}}"
                            Text="Garansi:"  FontSize="14" TextColor="#666" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" />
                     <Label IsVisible="{Binding IsGaransi, Converter={StaticResource NotNullConverter}}"

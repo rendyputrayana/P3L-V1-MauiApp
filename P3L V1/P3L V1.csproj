@@ -90,6 +90,9 @@
 	  <MauiXaml Update="View\DetailMerchandisePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\HistoriKomisiHunter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\HistoryPembelian.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
